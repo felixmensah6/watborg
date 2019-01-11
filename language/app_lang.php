@@ -1,0 +1,31 @@
+<?php
+
+/*
+ |-----------------------------------------------------------------
+ | App Language
+ |-----------------------------------------------------------------
+ */
+
+// Actions Language
+$lang['delete_success'] = 'Record was succesfully deleted';
+$lang['update_success'] = 'Your changes have been saved';
+
+// Form Language
+$lang['required'] = '%s is required';
+$lang['invalid'] = '%s is invalid';
+$lang['short_name'] = '%s is too short';
+$lang['valid_name'] = '%s should contain only alphabets, spaces and hyphen (-)';
+$lang['short_username_password'] = 'Your %s should not be less than %d characters';
+$lang['valid_username'] = 'Your %s should contain only letters and numbers with no spaces';
+$lang['name_exists'] = 'Your %s already exists and cannot be used';
+$lang['password_match'] = 'Your passwords do not match';
+$lang['valid_password'] = 'Your %s must contain at least 1 letter and 1 number';
+
+// User Language
+$lang['add_user_success'] = 'New user account successfully created';
+$lang['delete_own_account'] = 'You cannot delete your own account';
+
+// Authentication Language
+$lang['invalid_login'] = 'Invalid username or password';
+$lang['account_locked'] = 'Access denied! Your account is locked';
+$lang['login_attempts'] = 'Invalid password. You have %s attempts left';

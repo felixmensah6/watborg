@@ -5,7 +5,7 @@
  | Bootstrap
  |-----------------------------------------------------------------
  |
- | Classes, libraries, functions etc. to auto start when
+ | Classes, libraries, languages, helpers etc. to auto start when
  | the application starts running.
  |
  */
@@ -18,7 +18,9 @@
  * @example $bootstrap['model'] = ['login', 'menu', 'user'];
  *
  */
-$bootstrap['model'] = [];
+$bootstrap['model'] = [
+    'user-model'
+];
 
 /**
  *-----------------------------
@@ -31,7 +33,21 @@ $bootstrap['model'] = [];
 $bootstrap['library'] = [
     'session',
     'security',
-    'uri'
+    'uri',
+    'app',
+    'input'
+];
+
+/**
+ *-----------------------------
+ * Languages
+ *
+ * Languages to bootstrap when system initializes
+ * @example $bootstrap['language'] = ['form_lang', 'app_lang'];
+ *
+ */
+$bootstrap['language'] = [
+    'app_lang'
 ];
 
 /**
@@ -45,5 +61,6 @@ $bootstrap['library'] = [
 $bootstrap['helper'] = [
     'url',
     'html',
-    'form'
+    'form',
+    'date'
 ];

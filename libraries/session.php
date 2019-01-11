@@ -38,7 +38,7 @@ class Session
      * Set Session Variable
      * --------------------------------------------
      *
-     * @param array $variable The session variable
+     * @param array $variable Associative array of session variables
      * @return void
      */
     public function set($variable = [])

@@ -61,9 +61,9 @@
  */
 
 // Default routes
-$route['default-controller'] = 'welcome';
-$route['page-not-found'] = 'errors/page-not-found';
+$route['default-controller'] = 'dashboard';
+$route['page-not-found'] = '';
 
 // Custom routes
-$route['contact'] = 'contact/form';
-$route['(:any)'] = 'welcome/index/$1';
+$route['logout'] = 'login/logout';
+$route['change-password'] = 'login/change-password';

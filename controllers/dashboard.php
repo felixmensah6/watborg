@@ -2,11 +2,11 @@
 
 /*
  |-----------------------------------------------------------------
- | Welcome Controller
+ | Dashboard Controller
  |-----------------------------------------------------------------
  */
 
-class Welcome extends Controller
+class Dashboard extends Controller
 {
     /**
 	 * Index
@@ -14,16 +14,15 @@ class Welcome extends Controller
      *
      * @return string
 	 */
-    public function index($name = '', $age = '')
+    public function index()
     {
         // View data
-        $data['title'] = 'Unity Framework';
-        $data['name'] = $name;
-        $data['age'] = $age;
+        $data['title'] = 'Dashboard';
+        $data['data'] = $this->user_model->login_user_info('lisema');
 
         // Load view
-        $this->load->view('templates/header', $data);
-        $this->load->view('welcome', $data);
+        $this->load->view('templates/header');
+        $this->load->view('pages/dashboard', $data);
         $this->load->view('templates/footer');
     }
 }

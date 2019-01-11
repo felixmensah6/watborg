@@ -85,6 +85,12 @@ class Controller
 			$this->load->library($value);
 		}
 
+		// Load bootstrap languages
+		foreach ($bootstrap['language'] as $value)
+		{
+			$this->load->language($value);
+		}
+
 		// Load bootstrap helpers
 		foreach ($bootstrap['helper'] as $value)
 		{

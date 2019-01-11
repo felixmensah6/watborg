@@ -9,8 +9,8 @@
  |
  */
 
- class Input
- {
+class Input
+{
     /**
      * Input field name
      * --------------------------------------------
@@ -19,7 +19,7 @@
      */
  	protected $_field;
 
-   /*
+   /**
     * Input label
     * --------------------------------------------
     *
@@ -27,7 +27,7 @@
     */
    protected $_label;
 
-   /*
+   /**
     * Input validation error
     * --------------------------------------------
     *
@@ -35,7 +35,7 @@
     */
    protected $_error;
 
-   /*
+   /**
     * Http response header
     * --------------------------------------------
     *
@@ -43,7 +43,7 @@
     */
    protected $_http_response = "HTTP/1.1 404 Not Found";
 
-   /*
+   /**
     * Ajax request
     * --------------------------------------------
     *
@@ -51,7 +51,7 @@
     */
    protected $_ajax;
 
-   /*
+   /**
     * Constructor
     * --------------------------------------------
     *
@@ -473,7 +473,7 @@
      * @param string $label A human readable name for the field
      * @param string $rules The validation rule
      * @param array $error A user defined error message for rules
-     * @param bool $ajax Turn on when using ajax requests
+     * @param bool $ajax Turn off when not using ajax requests
      * @return string
      *
      * @example
@@ -486,7 +486,7 @@
      *          'min_length' => 'Your %s cannot be less than %d'
      *      ])
      */
-    public function validate($field, $label, $rules, $error = null, $ajax = false)
+    public function validate($field, $label, $rules, $error = null, $ajax = true)
     {
         // Variables
         $this->_field = $field;
@@ -588,4 +588,4 @@
                 break;
         };
     }
- }
+}
