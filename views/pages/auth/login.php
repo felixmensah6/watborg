@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                             <input type="hidden" name="submit" value="submit">
-                            <button type="submit" onclick="submitForm('#user-login', true);return false;" class="btn btn-success btn-block mb-2" tabindex="1">Log In</button>
+                            <button type="submit" onclick="submitForm('#user-login', true);return false;" class="btn btn-primary btn-block mb-2" tabindex="1">Log In</button>
                         </form>
                     </div>
                 </div>

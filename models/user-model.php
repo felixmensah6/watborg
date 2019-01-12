@@ -135,12 +135,31 @@ class User_Model extends Model
                  'title' => '?',
                  'firstname' => '?',
                  'lastname' => '?',
+                 'email' => '?',
                  'role' => '?',
                  'privilege_create' => '?',
                  'privilege_update' => '?',
                  'privilege_trash' => '?',
                  'login_attempts' => '?',
                  'locked' => '?'])
+              ->where('user_id = ?')
+              ->update($values);
+     }
+
+     /**
+ 	   * Set New Password
+ 	   * --------------------------------------------
+       *
+       * @return void
+ 	   */
+     public function set_password()
+     {
+         $values = func_get_args();
+         $this->db
+              ->table('users')
+              ->set([
+                 'password' => '?',
+                 'temp_password' => '?'])
               ->where('user_id = ?')
               ->update($values);
      }

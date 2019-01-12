@@ -42,8 +42,17 @@ class Users extends Controller
                 'class' => null,
                 'attributes' => null,
                 'visible' => 'edit-user',
-                'privilege' => 'edit'
+                'privilege' => null
             ],
+            [
+                'text' => 'Reset Password',
+                'url' => 'users/reset-password/' . $this->uri->segment(3),
+                'active' => 'reset-password',
+                'class' => null,
+                'attributes' => null,
+                'visible' => 'reset-password',
+                'privilege' => null
+            ]
         ];
 
         return $menu;
@@ -106,6 +115,30 @@ class Users extends Controller
         // Load view
         $this->load->view('templates/header');
         $this->load->view('pages/users/edit-user', $data);
+        $this->load->view('templates/footer');
+    }
+
+    /**
+	 * Reset Password
+	 * --------------------------------------------
+     *
+     * @param int $userid The user's id
+     * @return void
+	 */
+    public function reset_password($userid = '')
+    {
+        // Decrypted user id
+        $user_id = $this->security->decrypt_id($userid);
+
+        // View data
+        $data['title'] = 'Reset Password';
+        $data['page_menu_list'] = $this->page_menu_list();
+        $data['row'] = $this->user_model->user_info($user_id);
+        $data['userid'] = $userid;
+
+        // Load view
+        $this->load->view('templates/header');
+        $this->load->view('pages/users/reset-password', $data);
         $this->load->view('templates/footer');
     }
 
@@ -186,7 +219,7 @@ class Users extends Controller
                     "required" => $this->app->alert('danger', $this->app_lang->required)
                 ]
             );
-            $this->input->validate($temp_password, "Change Password Request", "required",
+            $this->input->validate($temp_password, "Enforce Password Change", "required",
                 [
                     "required" => $this->app->alert('danger', $this->app_lang->required)
                 ]
@@ -270,7 +303,53 @@ class Users extends Controller
             $user_id = $this->security->decrypt_id($userid);
 
             // Update user
-            $this->user_model->update_user_account($title, $firstname, $lastname, $role, $privilege_create, $privilege_update, $privilege_trash, 3, $locked, $user_id);
+            $this->user_model->update_user_account($title, $firstname, $lastname, $email, $role, $privilege_create, $privilege_update, $privilege_trash, 3, $locked, $user_id);
+
+            // Show alert message
+            echo $this->app->alert('success', $this->app_lang->update_success);
+        }
+    }
+
+    /**
+	 * Update Password
+	 * --------------------------------------------
+     *
+     * @param int $userid The user's id
+     * @return void
+	 */
+    public function update_password($userid = '')
+    {
+        // Check if form was submitted
+        if($this->input->post('submit'))
+        {
+            // Post data
+            $password = $this->input->post('password');
+            $confirm_password = $this->input->post('confirm_password');
+            $temp_password = $this->input->post('temp_password');
+
+            // Validate
+            $this->input->validate($password, "Password", "required|min_length[8]|valid_password[low]|matches[confirm_password]",
+                [
+                    "required" => $this->app->alert('danger', $this->app_lang->required),
+                    "min_length" => $this->app->alert('danger', $this->app_lang->short_username_password),
+                    "matches" => $this->app->alert('danger', $this->app_lang->password_match),
+                    "valid_password" => $this->app->alert('danger', $this->app_lang->valid_password)
+                ]
+            );
+            $this->input->validate($temp_password, "Enforce Password Change", "required",
+                [
+                    "required" => $this->app->alert('danger', $this->app_lang->required)
+                ]
+            );
+
+            // Decrypted user id
+            $user_id = $this->security->decrypt_id($userid);
+
+            // Hash password
+            $password = $this->security->password_hash($password);
+
+            // Update user
+            $this->user_model->set_password($password, $temp_password, $user_id);
 
             // Show alert message
             echo $this->app->alert('success', $this->app_lang->update_success);

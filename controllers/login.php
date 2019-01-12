@@ -19,11 +19,8 @@ class Login extends Controller
         // Check if already logged in and redirect
         $this->session->check("user_id", site_url());
 
-        // View data
-        $data['title'] = 'User Accounts';
-
         // Load view
-        $this->load->view('pages/login', $data);
+        $this->load->view('pages/auth/login');
     }
 
     /**
@@ -35,8 +32,8 @@ class Login extends Controller
     public function authenticate()
     {
         // Check if form was submitted
-        if($this->input->post('submit')) {
-
+        if($this->input->post('submit'))
+        {
             // Post data
             $username = $this->input->post('username');
             $password = $this->input->post('password');
@@ -95,11 +92,19 @@ class Login extends Controller
                 // Set current date and time
                 $now = date("Y-m-d H:i:s");
 
-                // Update login time and reset login attempts if login is successful
-                $this->user_model->reset_login_flags($now, $username);
+                if($row['temp_password'] == 1)
+                {
+                    // Redirect on successful login
+                    echo '<script>window.location = "' . site_url('change-password') . '";</script>';
+                }
+                else
+                {
+                    // Update login time and reset login attempts if login is successful
+                    $this->user_model->reset_login_flags($now, $username);
 
-                // Redirect on successful login
-                echo '<script>window.location = "' . site_url() . '";</script>';
+                    // Redirect on successful login
+                    echo '<script>window.location = "' . site_url() . '";</script>';
+                }
             }
             else
             {
@@ -117,14 +122,55 @@ class Login extends Controller
 	 */
     public function change_password()
     {
-        // Check if already logged in and redirect
-        $this->session->check("user_id", site_url());
+        // Check if password was changed and redirect
+        if($this->session->temp_password == 0)
+        {
+            redirect(site_url());
+        }
+        else
+        {
+            // Load view
+            $this->load->view('pages/auth/change-password');
+        }
+    }
 
-        // View data
-        $data['title'] = 'User Accounts';
+    /**
+	 * Authenticate Login
+	 * --------------------------------------------
+     *
+     * @return void
+	 */
+    public function set_password()
+    {
+        // Check if form was submitted
+        if($this->input->post('submit'))
+        {
+            // Post data
+            $password = $this->input->post('password');
+            $confirm_password = $this->input->post('confirm_password');
 
-        // Load view
-        $this->load->view('pages/login', $data);
+            // Validate
+            $this->input->validate($password, "Password", "required|min_length[8]|valid_password[low]|matches[confirm_password]",
+                [
+                    "required" => $this->app->alert('danger', $this->app_lang->required, true),
+                    "min_length" => $this->app->alert('danger', $this->app_lang->short_username_password, true),
+                    "matches" => $this->app->alert('danger', $this->app_lang->password_match, true),
+                    "valid_password" => $this->app->alert('danger', $this->app_lang->valid_password, true)
+                ]
+            );
+
+            // Hash password
+            $password = $this->security->password_hash($password);
+
+            // Update old password
+            $this->user_model->set_password($password, 0, $this->session->user_id);
+
+            // Reset temp password session value to 0
+            $this->session->set(['temp_password' => 0]);
+
+            // Redirect on successful login
+            echo '<script>window.location = "' . site_url() . '";</script>';
+        }
     }
 
     /**

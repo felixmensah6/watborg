@@ -1,6 +1,12 @@
 <?php
-// Check if already logged in and redirect
-$this->session->check("user_id", site_url("login"), true);
+    // Redirect and force user to change default password
+    if($this->session->temp_password == 1)
+    {
+        redirect(site_url('change-password'));
+    }
+
+    // Check if already logged in and redirect
+    $this->session->check("user_id", site_url("login"), true);
 ?>
 
 <!DOCTYPE html>
