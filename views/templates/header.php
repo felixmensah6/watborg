@@ -156,7 +156,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <span class="dropdown-item-text">
-                                <?= ucwords($this->app->user_info('title') . ' ' . $this->app->user_info('firstname') . ' ' . $this->app->user_info('lastname')); ?>
+                                <?= $this->app->user_info('title') . ' ' . ucwords($this->app->user_info('firstname') . ' ' . $this->app->user_info('lastname')); ?>
                                 <span class="d-block text-muted"><?= $this->app->user_roles($this->app->user_info('role')); ?></span>
                             </span>
                             <div class="dropdown-divider"></div>
