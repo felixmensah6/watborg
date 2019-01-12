@@ -51,7 +51,7 @@
                     $menu = [
                         [
                             'group' => 'Overview',
-                            'roles' => [],
+                            'roles' => [1, 2, 3, 4, 5, 6],
                             'menu' => [
                                 [
                                     'text' => 'Dashboard',
@@ -59,13 +59,13 @@
                                     'class' => null,
                                     'icon' => 'icon-tachometer',
                                     'attributes' => null,
-                                    'roles' => []
+                                    'roles' => [1, 2, 3, 4, 5, 6]
                                 ]
                             ]
                         ],
                         [
                             'group' => 'OPD',
-                            'roles' => [],
+                            'roles' => [1, 3, 5, 6],
                             'menu' => [
                                 [
                                     'text' => 'Records',
@@ -73,7 +73,7 @@
                                     'class' => null,
                                     'icon' => 'icon-address-book',
                                     'attributes' => null,
-                                    'roles' => []
+                                    'roles' => [1, 6]
                                 ],
                                 [
                                     'text' => 'Cashier',
@@ -81,7 +81,7 @@
                                     'class' => null,
                                     'icon' => 'icon-dollar-sign',
                                     'attributes' => null,
-                                    'roles' => []
+                                    'roles' => [1, 5]
                                 ],
                                 [
                                     'text' => 'Pharmacy',
@@ -89,13 +89,13 @@
                                     'class' => null,
                                     'icon' => 'icon-mortar-pestle',
                                     'attributes' => null,
-                                    'roles' => []
+                                    'roles' => [1, 7]
                                 ]
                             ]
                         ],
                         [
                             'group' => 'Consultation',
-                            'roles' => [],
+                            'roles' => [1, 2],
                             'menu' => [
                                 [
                                     'text' => 'Consulting Room 1',
@@ -103,13 +103,13 @@
                                     'class' => null,
                                     'icon' => 'icon-user-md',
                                     'attributes' => null,
-                                    'roles' => []
+                                    'roles' => [1, 2]
                                 ]
                             ]
                         ],
                         [
                             'group' => 'Settings',
-                            'roles' => [],
+                            'roles' => [1],
                             'menu' => [
                                 [
                                     'text' => 'System Setup',
@@ -117,7 +117,7 @@
                                     'class' => null,
                                     'icon' => 'icon-wrench',
                                     'attributes' => null,
-                                    'roles' => []
+                                    'roles' => [1]
                                 ],
                                 [
                                     'text' => 'User Accounts',
@@ -125,14 +125,14 @@
                                     'class' => null,
                                     'icon' => 'icon-user-cog',
                                     'attributes' => null,
-                                    'roles' => []
+                                    'roles' => [1]
                                 ]
                             ]
                         ],
                     ];
 
                     // Load menu
-                    echo $this->app->sidebar($menu, $this->uri->segment(1), '');
+                    echo $this->app->sidebar($menu, $this->uri->segment(1), $this->session->role);
                 ?>
             </div>
 
@@ -156,8 +156,8 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <span class="dropdown-item-text">
-                                John W. Smith
-                                <span class="d-block text-muted">smith.john@gmail.com</span>
+                                <?= ucwords($this->app->user_info('title') . ' ' . $this->app->user_info('firstname') . ' ' . $this->app->user_info('lastname')); ?>
+                                <span class="d-block text-muted"><?= $this->app->user_roles($this->app->user_info('role')); ?></span>
                             </span>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="users-profile.html">Profile</a>

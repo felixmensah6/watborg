@@ -47,8 +47,12 @@ class App
             // Menu group ul start tag
             $build .= '<ul>';
 
-            // Display menu group
-            $build .= '<li class="sidebar-nav-group">' . $list[$i]['group'] . '</li>';
+            // Check if user has access to this section
+            if(in_array($role, $list[$i]['roles']))
+            {
+                // Display menu group
+                $build .= '<li class="sidebar-nav-group">' . $list[$i]['group'] . '</li>';
+            }
 
             // Count menus
             $total_menus = count($list[$i]['menu']);
@@ -59,8 +63,12 @@ class App
                 // Add active class to active menu
                 $is_active = ($active == $list[$i]['menu'][$x]['url']) ? 'active ' : '';
 
-                // Display menus
-                $build .= '<li><a href="' . site_url($list[$i]['menu'][$x]['url']) . '" class="' . $is_active . '' . $list[$i]['menu'][$x]['class'] . '" ' . $list[$i]['menu'][$x]['attributes'] . '><i class="' . $list[$i]['menu'][$x]['icon'] . '"></i> ' . $list[$i]['menu'][$x]['text'] . '</a></li>';
+                // Check if user has access to this section
+                if(in_array($role, $list[$i]['menu'][$x]['roles']))
+                {
+                    // Display menus
+                    $build .= '<li><a href="' . site_url($list[$i]['menu'][$x]['url']) . '" class="' . $is_active . '' . $list[$i]['menu'][$x]['class'] . '" ' . $list[$i]['menu'][$x]['attributes'] . '><i class="' . $list[$i]['menu'][$x]['icon'] . '"></i> ' . $list[$i]['menu'][$x]['text'] . '</a></li>';
+                }
             }
 
             // Menu group ul closing tag
@@ -181,7 +189,8 @@ class App
             '3' => 'Nurse',
             '4' => 'Accountant',
             '5' => 'Cashier',
-            '6' => 'Records'
+            '6' => 'Records',
+            '7' => 'Pharmacy'
         ];
 
         return ($key != null) ? $roles[$key] : $roles;
@@ -254,4 +263,19 @@ class App
 		}
 	}
 
+    /**
+	 * Fetch Active User's Info from Database
+	 * --------------------------------------------
+     *
+	 * @param string $column The column name
+	 */
+    public function user_info($column)
+    {
+        $db = new Database;
+        $query = $db->columns('*')
+                    ->from('users')
+                    ->where('user_id = ?')
+                    ->select([$this->session->user_id]);
+        return $query[$column];
+    }
 }
