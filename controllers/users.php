@@ -33,7 +33,7 @@ class Users extends Controller
                 'class' => null,
                 'attributes' => null,
                 'visible' => null,
-                'privilege' => null
+                'privilege' => 'add'
             ],
             [
                 'text' => 'Edit User',
@@ -42,7 +42,7 @@ class Users extends Controller
                 'class' => null,
                 'attributes' => null,
                 'visible' => 'edit-user',
-                'privilege' => null
+                'privilege' => 'edit'
             ],
             [
                 'text' => 'Reset Password',
@@ -51,7 +51,7 @@ class Users extends Controller
                 'class' => null,
                 'attributes' => null,
                 'visible' => 'reset-password',
-                'privilege' => null
+                'privilege' => 'edit'
             ]
         ];
 
@@ -84,6 +84,9 @@ class Users extends Controller
 	 */
     public function add_user()
     {
+        // Check if user has access to this section
+        $this->app->restrict_access('add');
+
         // View data
         $data['title'] = 'Add User';
         $data['page_menu_list'] = $this->page_menu_list();
@@ -103,6 +106,9 @@ class Users extends Controller
 	 */
     public function edit_user($userid = '')
     {
+        // Check if user has access to this section
+        $this->app->restrict_access('edit');
+
         // Decrypted user id
         $user_id = $this->security->decrypt_id($userid);
 
@@ -127,6 +133,9 @@ class Users extends Controller
 	 */
     public function reset_password($userid = '')
     {
+        // Check if user has access to this section
+        $this->app->restrict_access('edit');
+
         // Decrypted user id
         $user_id = $this->security->decrypt_id($userid);
 
@@ -418,21 +427,29 @@ class Users extends Controller
 	 */
     public function delete_user($userid = '')
     {
-        // Decrypt user id
-        $user_id = $this->security->decrypt_id($userid);
-
-        // Prevent user from deleting their own account
-        if($user_id == $this->session->user_id)
+        // Check if user has access to this section
+        if($this->app->restrict_access('trash', true))
         {
-            show_http_response(404, $this->app_lang->delete_own_account);
+            show_http_response(404, $this->app_lang->action_denied);
         }
         else
         {
-            // delete user
-            $this->user_model->delete_user($user_id);
+            // Decrypt user id
+            $user_id = $this->security->decrypt_id($userid);
 
-            // Show alert message
-            echo $this->app_lang->delete_success;
+            // Prevent user from deleting their own account
+            if($user_id == $this->session->user_id)
+            {
+                show_http_response(404, $this->app_lang->delete_own_account);
+            }
+            else
+            {
+                // delete user
+                $this->user_model->delete_user($user_id);
+
+                // Show alert message
+                echo $this->app_lang->delete_success;
+            }
         }
     }
 }

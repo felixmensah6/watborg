@@ -9,6 +9,7 @@
 // Actions Language
 $lang['delete_success'] = 'Record was succesfully deleted';
 $lang['update_success'] = 'Your changes have been saved';
+$lang['action_denied'] = 'Unable to continue. Access denied!';
 
 // Form Language
 $lang['required'] = '%s is required';

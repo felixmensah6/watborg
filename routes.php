@@ -66,4 +66,5 @@ $route['page-not-found'] = '';
 
 // Custom routes
 $route['logout'] = 'login/logout';
+$route['access-denied'] = 'errors/access-denied';
 $route['change-password'] = 'login/change-password';

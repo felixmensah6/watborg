@@ -47,6 +47,7 @@
                             ];
                             echo select($options, 'temp_password', null, ' ', 'form-control select2-nosearch', 'id="temp_password" tabindex="1" data-placeholder="Enforce Password Change" data-clear');
                         ?>
+                        <small class="form-text text-muted">Force users to change their password the first time they try to login.</small>
                     </div>
                 </div>
                 <input type="hidden" name="submit" value="submit">

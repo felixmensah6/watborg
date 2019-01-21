@@ -278,4 +278,58 @@ class App
                     ->select([$this->session->user_id]);
         return $query[$column];
     }
+
+    /**
+	 * Restrict Access
+	 * --------------------------------------------
+     *
+     * @return string $key The privileges array key
+     * @return bool $return Return true or false instead of redirecting
+     * @return array $role The role array
+     * @return bool $ajax Set to true to redirect with javascript
+     * @return void
+	 */
+    public function restrict_access($key, $return = false, $role = null, $ajax = false)
+    {
+        // Privileges array
+        $privileges = [
+            'add' => $this->session->privilege_create,
+            'edit' => $this->session->privilege_update,
+            'trash' => $this->session->privilege_trash,
+            'delete' => $this->session->privilege_delete,
+        ];
+
+        $redirect_url = site_url('access-denied');
+
+        if($role == null && $privileges[$key] == 0)
+        {
+            if($ajax === true)
+            {
+                exit('<script>window.location = "' . $redirect_url . '";</script>');
+            }
+            elseif($return === true)
+            {
+                return true;
+            }
+            else
+            {
+                header("Location: " . $redirect_url);
+            }
+        }
+        elseif(is_array($role) && !in_array($key, $role))
+        {
+            if($ajax === true)
+            {
+                exit('<script>window.location = "' . $redirect_url . '";</script>');
+            }
+            elseif($return === true)
+            {
+                return true;
+            }
+            else
+            {
+                header("Location: " . $redirect_url);
+            }
+        }
+    }
 }
