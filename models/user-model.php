@@ -17,9 +17,21 @@ class User_Model extends Model
      */
     public function user_info($userid)
     {
-        return $this->db
-                    ->columns('*')
-                    ->from('users')
+        return $this->db->columns([
+                        'U.title',
+                        'U.firstname',
+                        'U.lastname',
+                        'U.email',
+                        'U.role_id',
+                        'R.role_name',
+                        'U.privilege_create',
+                        'U.privilege_update',
+                        'U.privilege_trash',
+                        'U.locked'
+                    ])
+                    ->from('users U')
+                    ->join('roles R')
+                    ->on('U.role_id = R.role_id')
                     ->where('user_id = ?')
                     ->select([$userid]);
     }
@@ -110,7 +122,7 @@ class User_Model extends Model
                   'firstname',
                   'lastname',
                   'email',
-                  'role',
+                  'role_id',
                   'joined_date',
                   'privilege_create',
                   'privilege_update',
@@ -136,7 +148,7 @@ class User_Model extends Model
                  'firstname' => '?',
                  'lastname' => '?',
                  'email' => '?',
-                 'role' => '?',
+                 'role_id' => '?',
                  'privilege_create' => '?',
                  'privilege_update' => '?',
                  'privilege_trash' => '?',

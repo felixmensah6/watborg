@@ -45,7 +45,7 @@
                                 '1' => 'Enforce the change of password on first login',
                                 '0' => 'Do not enforce password change'
                             ];
-                            echo select($options, 'temp_password', null, ' ', 'form-control select2-nosearch', 'id="temp_password" tabindex="1" data-placeholder="Enforce Password Change" data-clear');
+                            echo select($options, 'temp_password', null, ' ', 'form-control select2', 'id="temp_password" tabindex="1" data-placeholder="Enforce Password Change" data-minimum-results-for-search="Infinity" data-clear');
                         ?>
                         <small class="form-text text-muted">Force users to change their password the first time they try to login.</small>
                     </div>
@@ -67,9 +67,7 @@
         $.fn.select2.defaults.set( "theme", "bootstrap" );
 
         // Select2
-        $('.select2-nosearch').select2({
-            minimumResultsForSearch: -1
-        });
+        $('.select2').select2();
 
     });
 </script>

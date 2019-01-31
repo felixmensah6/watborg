@@ -76,6 +76,14 @@
                                     'roles' => [1, 6]
                                 ],
                                 [
+                                    'text' => 'Triage',
+                                    'url' => 'triage',
+                                    'class' => null,
+                                    'icon' => 'icon-thermometer-half',
+                                    'attributes' => null,
+                                    'roles' => [1, 3]
+                                ],
+                                [
                                     'text' => 'Cashier',
                                     'url' => 'cashier',
                                     'class' => null,
@@ -101,26 +109,26 @@
                                     'text' => 'Consulting Room 1',
                                     'url' => 'room-one',
                                     'class' => null,
-                                    'icon' => 'icon-user-md',
+                                    'icon' => 'icon-stethoscope',
                                     'attributes' => null,
                                     'roles' => [1, 2]
                                 ]
                             ]
                         ],
                         [
-                            'group' => 'Settings',
+                            'group' => 'Administration',
                             'roles' => [1],
                             'menu' => [
                                 [
-                                    'text' => 'System Setup',
+                                    'text' => 'Settings',
                                     'url' => 'system',
                                     'class' => null,
-                                    'icon' => 'icon-wrench',
+                                    'icon' => 'icon-cogs',
                                     'attributes' => null,
                                     'roles' => [1]
                                 ],
                                 [
-                                    'text' => 'User Accounts',
+                                    'text' => 'Setup Users',
                                     'url' => 'users',
                                     'class' => null,
                                     'icon' => 'icon-user-cog',
@@ -132,7 +140,7 @@
                     ];
 
                     // Load menu
-                    echo $this->app->sidebar($menu, $this->uri->segment(1), $this->session->role);
+                    echo $this->app->sidebar($menu, $this->uri->segment(1), $this->session->role_level);
                 ?>
             </div>
 
@@ -157,7 +165,7 @@
                         <div class="dropdown-menu dropdown-menu-right">
                             <span class="dropdown-item-text">
                                 <?= $this->app->user_info('title') . ' ' . ucwords($this->app->user_info('firstname') . ' ' . $this->app->user_info('lastname')); ?>
-                                <span class="d-block text-muted"><?= $this->app->user_roles($this->app->user_info('role')); ?></span>
+                                <span class="d-block text-muted"><?= $this->app->user_info('role_name'); ?></span>
                             </span>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="users-profile.html">Profile</a>

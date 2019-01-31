@@ -18,7 +18,6 @@ class Dashboard extends Controller
     {
         // View data
         $data['title'] = 'Dashboard';
-        $data['data'] = $this->user_model->login_user_info('lisema');
 
         // Load view
         $this->load->view('templates/header');

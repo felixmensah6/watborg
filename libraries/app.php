@@ -22,6 +22,7 @@ class App
         // Load classes
         $this->uri = new Uri;
         $this->session = new Session;
+        $this->db = new Database;
     }
 
     /**
@@ -183,15 +184,9 @@ class App
      */
     public function user_roles($key = null)
     {
-        $roles = [
-            '1' => 'Administrator',
-            '2' => 'Doctor',
-            '3' => 'Nurse',
-            '4' => 'Accountant',
-            '5' => 'Cashier',
-            '6' => 'Records',
-            '7' => 'Pharmacy'
-        ];
+        $roles = $this->db->columns(['role_level', 'role_name'])
+                          ->from('roles')
+                          ->select_all(null, PDO::FETCH_KEY_PAIR);
 
         return ($key != null) ? $roles[$key] : $roles;
     }
@@ -271,9 +266,15 @@ class App
 	 */
     public function user_info($column)
     {
-        $db = new Database;
-        $query = $db->columns('*')
-                    ->from('users')
+        $query = $this->db->columns([
+                        'U.title',
+                        'U.firstname',
+                        'U.lastname',
+                        'R.role_name'
+                    ])
+                    ->from('users U')
+                    ->join('roles R')
+                    ->on('U.role_id = R.role_id')
                     ->where('user_id = ?')
                     ->select([$this->session->user_id]);
         return $query[$column];

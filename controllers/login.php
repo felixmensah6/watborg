@@ -80,7 +80,7 @@ class Login extends Controller
                 $this->session->set([
                     'user_id' => $row['user_id'],
                     'username' => $row['username'],
-                    'role' => $row['role'],
+                    'role_level' => $row['role_id'],
                     'privilege_create' => $row['privilege_create'],
                     'privilege_update' => $row['privilege_update'],
                     'privilege_trash' => $row['privilege_trash'],

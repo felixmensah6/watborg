@@ -391,10 +391,7 @@ class Users extends Controller
                 return ucwords($value);
             },
             'username' => null,
-            'role' => function($value)
-            {
-                return $this->app->user_roles($value);
-            },
+            'role_name' => null,
             'login_date' => function($value)
             {
                 return ($value != null) ? timeago($value) : 'Pending';
@@ -415,7 +412,16 @@ class Users extends Controller
             }
         ];
 
-        $this->datatables->render('users', $columns);
+        $this->datatables->render_advance(
+            $columns,
+            'SELECT {TOTAL_ROWS} U.user_id, U.title, U.firstname, U.lastname, U.username, R.role_name, U.login_date, U.locked
+            FROM users U
+            INNER JOIN roles R
+            ON U.role_id = R.role_id
+            WHERE {SEARCH_COLUMN}
+            ORDER BY {ORDER_COLUMN} {ORDER_DIR} {LIMIT_ROWS}',
+            ['U.', 'R.']
+        );
     }
 
     /**

@@ -25,7 +25,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-2">
                         <label class="label-required">Title</label>
-                        <?= select($this->app->user_titles(), 'title', $row['title'], 'Select Title', 'form-control select2-nosearch', 'id="title" tabindex="1" data-clear'); ?>
+                        <?= select($this->app->user_titles(), 'title', $row['title'], 'Select Title', 'form-control select2', 'id="title" data-minimum-results-for-search="Infinity" tabindex="1" data-clear'); ?>
                     </div>
                 </div>
                 <div class="form-row">
@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label class="label-required">User Role</label>
-                        <?= select($this->app->user_roles(), 'role', $row['role'], 'Select Role', 'form-control select2-nosearch', 'id="role" tabindex="1" data-clear'); ?>
+                        <?= select($this->app->user_roles(), 'role', $row['role_id'], 'Select Role', 'form-control select2', 'id="role" data-minimum-results-for-search="Infinity" tabindex="1" data-clear'); ?>
                     </div>
                 </div>
                 <div class="form-row">
@@ -88,9 +88,7 @@
         $.fn.select2.defaults.set( "theme", "bootstrap" );
 
         // Select2
-        $('.select2-nosearch').select2({
-            minimumResultsForSearch: -1
-        });
+        $('.select2').select2();
 
     });
 </script>
