@@ -167,6 +167,32 @@ function redirect($url, int $timeout = null)
 }
 
 /**
+ * Javascript Redirect
+ * --------------------------------------------
+ *
+ * @param string $url The url to redirect to
+ * @param int $timeout Time in seconds before redirecting
+ * @example js_redirect('/contact/phone', 5);
+ * The above will redirect to /contact/phone after 5 seconds.
+ * Note: Add a starting slash when using a uri or relative links
+ * @return void
+ */
+function js_redirect($url, int $timeout = null)
+{
+    // Convert seconds to milliseconds
+    $timeout = ($timeout !== null) ? ($timeout * 1000) : $timeout;
+
+    if($timeout !== null)
+    {
+        return "<script>window.setTimeout(function() {window.location.href = '{$url}';}, {$timeout});</script>";
+    }
+    else
+    {
+        return "<script>window.location = '{$url}';</script>";
+    }
+}
+
+/**
  * HTTP Response Code
  * --------------------------------------------
  *

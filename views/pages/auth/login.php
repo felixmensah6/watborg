@@ -33,13 +33,13 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="<?= site_url("login/authenticate"); ?>" id="user-login">
+                        <form method="post" action="<?= site_url("login/authenticate"); ?>">
                             <div class="status"></div>
                             <div class="form-group">
-                                <input type="text" name="username" id="username" class="form-control" placeholder="Username" autocomplete="off" tabindex="1">
+                                <input type="text" name="username" class="form-control" placeholder="Username" autocomplete="off" tabindex="1">
                             </div>
                             <div class="form-group">
-                                <input type="password" name="password" id="password" class="form-control" placeholder="Password" autocomplete="off" tabindex="1">
+                                <input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" tabindex="1">
                             </div>
                             <div class="form-row login-forgot">
                                 <div class="form-group col-6"></div>
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                             <input type="hidden" name="submit" value="submit">
-                            <button type="submit" onclick="submitForm('#user-login', true);return false;" class="btn btn-primary btn-block mb-2" tabindex="1">Log In</button>
+                            <button type="submit" onclick="submitForm(this.form);" class="btn btn-primary btn-block mb-2" tabindex="1">Log In</button>
                         </form>
                     </div>
                 </div>

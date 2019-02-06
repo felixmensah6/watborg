@@ -21,6 +21,7 @@ $lang['valid_username'] = 'Your %s should contain only letters and numbers with 
 $lang['name_exists'] = 'Your %s already exists and cannot be used';
 $lang['password_match'] = 'Your passwords do not match';
 $lang['valid_password'] = 'Your %s must contain at least 1 letter and 1 number';
+$lang['password_change'] = 'Password saved! Logging you in %s seconds';
 
 // User Language
 $lang['add_user_success'] = 'New user account successfully created';
@@ -30,3 +31,4 @@ $lang['delete_own_account'] = 'You cannot delete your own account';
 $lang['invalid_login'] = 'Invalid username or password';
 $lang['account_locked'] = 'Access denied! Your account is locked';
 $lang['login_attempts'] = 'Invalid password. You have %s attempts left';
+$lang['set_password_info'] = 'Please set a new password for your account.';

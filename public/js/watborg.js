@@ -3,14 +3,13 @@
  * Form Submit Function
  * --------------------------------------------
  */
-function submitForm(form, add, reload = false){
+function submitForm(form, add = true, reload = false){
 
 	// Variables
-	var url = $(form).attr("action");
-	var formData = $(form).serializeArray();
-	var loader = $(form);
-	var select2 = $("[data-clear]");
-	var target = $(".status");
+	var url = $(form).attr("action"),
+		formData = $(form).serializeArray(),
+		loader = $(form),select2 = $("[data-clear]"),
+		target = $(".status");
 
 	// Show loader
 	loader.addClass("loading");
@@ -40,6 +39,9 @@ function submitForm(form, add, reload = false){
 			loader.removeClass("loading");
 			$('html,body').animate({scrollTop: target.offset().top - 100}, 1000);
 		});
+
+	// Prevent default action
+	event.preventDefault();
 }
 
 /**
@@ -83,3 +85,15 @@ $('#records').on('mousedown mouseup','.delete-record', function(e) {
 	});
 	e.preventDefault();
 });
+
+
+/**
+ * Formart Date Function
+ * --------------------------------------------
+ * E.g. 14/02/2019 to 02/14/2019 for support in Date() function
+ */
+function format_date(date_string, separator) {
+	var dateParts = date_string.split(separator);
+	formattedDate = dateParts[1] + '/' + dateParts[0] + '/' + dateParts[2];
+	return new Date(formattedDate);
+}

@@ -103,7 +103,7 @@ class Login extends Controller
                     $this->user_model->reset_login_flags($now, $username);
 
                     // Redirect on successful login
-                    echo '<script>window.location = "' . site_url() . '";</script>';
+                    echo js_redirect(site_url());
                 }
             }
             else
@@ -169,7 +169,7 @@ class Login extends Controller
             $this->session->set(['temp_password' => 0]);
 
             // Redirect on successful login
-            echo '<script>window.location = "' . site_url() . '";</script>';
+            show_http_response(404, $this->app->alert('success', sprintf($this->app_lang->password_change . js_redirect(site_url(), 3), 3), true));
         }
     }
 

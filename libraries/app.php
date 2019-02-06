@@ -176,6 +176,43 @@ class App
     }
 
     /**
+     * Marrital Status
+     * --------------------------------------------
+     *
+     * @return array
+     */
+    public function marrital_status()
+    {
+        $status = [
+            'Single' => 'Single',
+            'Married' => 'Married',
+            'Divorced' => 'Divorced',
+            'Widowed' => 'Widowed'
+        ];
+
+        return $status;
+    }
+
+    /**
+     *  Religion
+     * --------------------------------------------
+     *
+     * @return array
+     */
+    public function religion()
+    {
+        $status = [
+            'Christian' => 'Christian',
+            'Muslim' => 'Muslim',
+            'Traditional' => 'Traditional',
+            'Other' => 'Other',
+            'None' => 'None'
+        ];
+
+        return $status;
+    }
+
+    /**
      * User Roles
      * --------------------------------------------
      *
@@ -189,6 +226,23 @@ class App
                           ->select_all(null, PDO::FETCH_KEY_PAIR);
 
         return ($key != null) ? $roles[$key] : $roles;
+    }
+
+    /**
+     * Occupations
+     * --------------------------------------------
+     *
+     * @param string $key The role number or key
+     * @return array
+     */
+    public function occupations($key = null)
+    {
+        $occupations = $this->db->columns(['occupation_id', 'occupation_name'])
+                          ->from('occupations')
+                          ->order('occupation_name')
+                          ->select_all(null, PDO::FETCH_KEY_PAIR);
+
+        return ($key != null) ? $occupations[$key] : $occupations;
     }
 
     /**
@@ -210,13 +264,23 @@ class App
         }
         else
         {
-            if($type == 'success')
+            switch ($type) 
             {
-                return '<p class="text-success"><i class="icon-check-circle mr-1"></i>' . $message . '</p>';
-            }
-            else
-            {
-                return '<p class="text-danger"><i class="icon-times-circle mr-1"></i>' . $message . '</p>';
+                case 'success':
+                    return '<p class="text-success"><i class="icon-check-circle mr-1"></i>' . $message . '</p>';
+                    break;
+
+                case 'danger':
+                    return '<p class="text-danger"><i class="icon-times-circle mr-1"></i>' . $message . '</p>';
+                    break;
+
+                case 'warning':
+                    return '<p class="text-warning"><i class="icon-exclamation-triangle mr-1"></i>' . $message . '</p>';
+                    break;
+                
+                default:
+                    return '<p class="text-primary"><i class="icon-info-circle mr-1"></i>' . $message . '</p>';
+                    break;
             }
         }
 	}
