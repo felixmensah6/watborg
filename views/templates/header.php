@@ -5,8 +5,8 @@
         redirect(site_url('change-password'));
     }
 
-    // Check if already logged in and redirect
-    $this->session->check("user_id", site_url("login"), true);
+    // Check for an active session else redirect
+    $this->app->check_active_session();
 ?>
 
 <!DOCTYPE html>
@@ -124,6 +124,14 @@
                                     'url' => 'system',
                                     'class' => null,
                                     'icon' => 'icon-cogs',
+                                    'attributes' => null,
+                                    'roles' => [1]
+                                ],
+                                [
+                                    'text' => 'Price Setup',
+                                    'url' => 'pricing',
+                                    'class' => null,
+                                    'icon' => 'icon-percent',
                                     'attributes' => null,
                                     'roles' => [1]
                                 ],

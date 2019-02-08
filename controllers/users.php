@@ -84,6 +84,9 @@ class Users extends Controller
 	 */
     public function add_user()
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+
         // Check if user has access to this section
         $this->app->restrict_access('add');
 
@@ -106,6 +109,9 @@ class Users extends Controller
 	 */
     public function edit_user($userid = '')
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+        
         // Check if user has access to this section
         $this->app->restrict_access('edit');
 
@@ -133,6 +139,9 @@ class Users extends Controller
 	 */
     public function reset_password($userid = '')
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+
         // Check if user has access to this section
         $this->app->restrict_access('edit');
 
@@ -159,6 +168,9 @@ class Users extends Controller
 	 */
     public function create_user()
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+
         // Check if form was submitted
         if($this->input->post('submit'))
         {
@@ -257,6 +269,9 @@ class Users extends Controller
 	 */
     public function update_user($userid = '')
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+
         // Check if form was submitted
         if($this->input->post('submit'))
         {
@@ -328,6 +343,9 @@ class Users extends Controller
 	 */
     public function update_password($userid = '')
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+
         // Check if form was submitted
         if($this->input->post('submit'))
         {
@@ -373,6 +391,9 @@ class Users extends Controller
 	 */
     public function display_users()
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+        
         // Load library
         $this->load->library('datatables');
 
@@ -433,6 +454,9 @@ class Users extends Controller
 	 */
     public function delete_user($userid = '')
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+
         // Check if user has access to this section
         if($this->app->restrict_access('trash', true))
         {

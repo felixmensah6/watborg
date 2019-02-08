@@ -27,7 +27,7 @@
                     <div class="form-group col-md-4">
                         <label class="label-required">Hospital Number</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="hospital_number" id="hospital_number" placeholder="e.g. 174/19" readonly tabindex="1">
+                            <input type="text" class="form-control" name="hospital_number" id="hospital_number" readonly tabindex="1">
                             <?= select(['0'=>'New','1'=>'Old'], 'patient_type', null, null, 'form-control select2', 'id="patient_type" tabindex="1" data-width="30%" data-minimum-results-for-search="Infinity" data-clear'); ?>
                             <div class="input-group-append">
                                 <button class="btn btn-secondary" type="button" id="patient_search" disabled tabindex="1">Search</button>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label class="label-required">Date of Birth</label>
-                            <div class="input-group datetimepicker mb-3">
+                            <div class="input-group datetimepicker">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Age: <span class="ml-1" id="age">0</span></span>
                                 </div>
@@ -98,6 +98,16 @@
                         <div class="form-group col-md-6">
                             <label class="label-required">Contact Number</label>
                             <input type="phone" name="phone" class="form-control" placeholder="e.g. 024xxxxxxx" tabindex="1">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="label-required">District</label>
+                            <select class="form-control select2" name="district" data-ajax--url="<?= site_url("data/districts"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select District" data-width="100%"></select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="label-required">Locality</label>
+                            <select class="form-control select2" name="locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-width="100%"></select>
                         </div>
                     </div>
                 </fieldset>

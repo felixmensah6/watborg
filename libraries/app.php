@@ -26,6 +26,18 @@ class App
     }
 
     /**
+     * Check for Active Session
+     * --------------------------------------------
+     *
+     * @return array
+     */
+    public function check_active_session()
+    {
+        // Check if already logged in and redirect
+        $this->session->check("user_id", site_url("login"), true);
+    }
+
+    /**
      * Sidebar Menu
      * --------------------------------------------
      *

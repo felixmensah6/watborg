@@ -142,6 +142,9 @@ class Login extends Controller
 	 */
     public function set_password()
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+        
         // Check if form was submitted
         if($this->input->post('submit'))
         {

@@ -66,6 +66,9 @@ class Records extends Controller
 	 */
     public function patient_records()
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+        
         // Check if user has access to this section
         $this->app->restrict_access('add');
 
