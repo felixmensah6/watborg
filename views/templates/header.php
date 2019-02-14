@@ -20,11 +20,13 @@
 
     <!-- Stylesheets -->
     <link href="<?= asset('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link href="<?= asset('plugins/select2/css/select2.min.css'); ?>" rel="stylesheet">
+    <link href="<?= asset('plugins/datetimepicker/css/datetimepicker.min.css'); ?>" rel="stylesheet">
+    <link href="<?= asset("plugins/datatables/css/datatables.bootstrap.css"); ?>" rel="stylesheet">
     <link href="<?= asset('css/unity.css'); ?>" rel="stylesheet">
 
     <!-- Javascript -->
     <script src="<?= asset('js/jquery.min.js'); ?>"></script>
-    <script src="<?= asset('js/bootstrap.min.js'); ?>"></script>
 </head>
 
 <body>
@@ -76,14 +78,6 @@
                                     'roles' => [1, 6]
                                 ],
                                 [
-                                    'text' => 'Triage',
-                                    'url' => 'triage',
-                                    'class' => null,
-                                    'icon' => 'icon-thermometer-half',
-                                    'attributes' => null,
-                                    'roles' => [1, 3]
-                                ],
-                                [
                                     'text' => 'Cashier',
                                     'url' => 'cashier',
                                     'class' => null,
@@ -92,26 +86,36 @@
                                     'roles' => [1, 5]
                                 ],
                                 [
+                                    'text' => 'Treatment Room',
+                                    'url' => 'treatment',
+                                    'class' => null,
+                                    'icon' => 'icon-thermometer-half',
+                                    'attributes' => null,
+                                    'roles' => [1, 3]
+                                ],
+                                [
+                                    'text' => 'Consulting Room',
+                                    'url' => 'consultation',
+                                    'class' => null,
+                                    'icon' => 'icon-stethoscope',
+                                    'attributes' => null,
+                                    'roles' => [1, 2]
+                                ],
+                                [
                                     'text' => 'Pharmacy',
                                     'url' => 'pharmacy',
                                     'class' => null,
                                     'icon' => 'icon-mortar-pestle',
                                     'attributes' => null,
                                     'roles' => [1, 7]
-                                ]
-                            ]
-                        ],
-                        [
-                            'group' => 'Consultation',
-                            'roles' => [1, 2],
-                            'menu' => [
+                                ],
                                 [
-                                    'text' => 'Consulting Room 1',
-                                    'url' => 'room-one',
+                                    'text' => 'Optical Display',
+                                    'url' => 'optical-display',
                                     'class' => null,
-                                    'icon' => 'icon-stethoscope',
+                                    'icon' => 'icon-glasses',
                                     'attributes' => null,
-                                    'roles' => [1, 2]
+                                    'roles' => [1, 7]
                                 ]
                             ]
                         ],
@@ -120,18 +124,24 @@
                             'roles' => [1],
                             'menu' => [
                                 [
-                                    'text' => 'Settings',
-                                    'url' => 'system',
+                                    'text' => 'Pay Slip',
+                                    'url' => 'pay-slip',
                                     'class' => null,
-                                    'icon' => 'icon-cogs',
+                                    'icon' => 'icon-id-badge',
                                     'attributes' => null,
                                     'roles' => [1]
-                                ],
+                                ]
+                            ]
+                        ],
+                        [
+                            'group' => 'Management',
+                            'roles' => [1],
+                            'menu' => [
                                 [
-                                    'text' => 'Price Setup',
-                                    'url' => 'pricing',
+                                    'text' => 'Settings',
+                                    'url' => 'settings',
                                     'class' => null,
-                                    'icon' => 'icon-percent',
+                                    'icon' => 'icon-cogs',
                                     'attributes' => null,
                                     'roles' => [1]
                                 ],

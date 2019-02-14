@@ -8,7 +8,8 @@ function submitForm(form, add = true, reload = false){
 	// Variables
 	var url = $(form).attr("action"),
 		formData = $(form).serializeArray(),
-		loader = $(form),select2 = $("[data-clear]"),
+		loader = $(form),
+        select2 = $("[data-clear]"),
 		target = $(".status");
 
 	// Show loader
@@ -86,7 +87,6 @@ $('#records').on('mousedown mouseup','.delete-record', function(e) {
 	e.preventDefault();
 });
 
-
 /**
  * Formart Date Function
  * --------------------------------------------
@@ -97,3 +97,60 @@ function format_date(date_string, separator) {
 	formattedDate = dateParts[1] + '/' + dateParts[0] + '/' + dateParts[2];
 	return new Date(formattedDate);
 }
+
+/**
+ * Update Total/Sum Table Column Function
+ * --------------------------------------------
+ */
+function updateTotal(){
+    var sum = 0;
+    // iterate through each td based on class and add the values
+    $(".price").each(function() {
+
+        var value = $(this).text();
+        // add only if the value is number
+        if(!isNaN(value) && value.length != 0) {
+            sum += parseFloat(value);
+        }
+
+        $('#total-cost').number(sum, 2);
+    });
+}
+
+/**
+ * Initialize Datatables
+ * --------------------------------------------
+ */
+ var this_table = $('#records'),
+     data_ajax = $(this_table).attr('data-ajax'),
+     data_save_state = $(this_table).attr('data-save-state'),
+     data_targets = JSON.parse($(this_table).attr('data-targets'));
+
+$(this_table).DataTable({
+    "processing": true,
+    "stateSave": data_save_state,
+    "serverSide": true,
+    "ajax": data_ajax,
+    "columnDefs": [
+        {
+            "searchable": false,
+            "targets": data_targets
+        }
+    ]
+});
+
+/**
+ * Global Initializations
+ * --------------------------------------------
+ */
+(function() {
+
+  "use strict";
+
+    // Select2
+    $('.select2').select2();
+
+    // Datepicker
+    $('.datetimepicker').datetimepicker();
+
+})();

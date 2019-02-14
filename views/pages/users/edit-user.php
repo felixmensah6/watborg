@@ -1,6 +1,3 @@
-<!-- Stylesheets -->
-<link href="<?= asset('plugins/select2/css/select2.min.css'); ?>" rel="stylesheet">
-
 <!-- Page Header -->
 <div class="page-header has-menu">
     <div class="page-title">
@@ -18,7 +15,7 @@
 <div class="content boxed">
 
     <!-- Panel -->
-    <div class="panel panel-default bordered column-item">
+    <div class="panel panel-default bordered">
         <div class="panel-body">
             <div class="status"></div>
             <form action="<?= site_url("users/update-user/" . $userid); ?>" method="post">
@@ -78,17 +75,3 @@
     </div>
 
 </div>
-
-<!-- Javascript -->
-<script src="<?= asset('plugins/select2/js/select2.min.js'); ?>"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-
-        // Select2 bootstrap theme
-        $.fn.select2.defaults.set( "theme", "bootstrap" );
-
-        // Select2
-        $('.select2').select2();
-
-    });
-</script>

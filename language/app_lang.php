@@ -32,3 +32,6 @@ $lang['invalid_login'] = 'Invalid username or password';
 $lang['account_locked'] = 'Access denied! Your account is locked';
 $lang['login_attempts'] = 'Invalid password. You have %s attempts left';
 $lang['set_password_info'] = 'Please set a new password for your account.';
+
+// Records Language
+$lang['add_patient_success'] = 'New patient successfully registered';

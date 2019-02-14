@@ -91,6 +91,10 @@ function time_format($date, $date_format = null, $time = false, $time_format = n
             return date("d-m-Y {$time_format}", strtotime($date));
             break;
 
+        case "YYYY-MM-DD":
+            return date("Y-m-d {$time_format}", strtotime($date));
+            break;
+
         case "DD/MM/YYYY":
             return rtrim(date("d/m/Y {$time_format}", strtotime($date)));
             break;

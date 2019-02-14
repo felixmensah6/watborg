@@ -168,8 +168,21 @@ class Datatables
             ($key != null) ? $this->_columns[] = $key : null;
         }
 
+        // Total number of columns
+        $column_count = count($this->_columns);
+
+        // Check for only searchable columns
+        $searchable = [];
+        for ($i = 0; $i < $column_count; $i++)
+        {
+            if(isset($_GET["columns"][$i]["searchable"]) && $_GET["columns"][$i]["searchable"] == "true")
+            {
+                $searchable[] = $this->_columns[$i];
+            }
+        }
+
         // Build multi-search query from column list
-		$search_list = implode(" LIKE '%".$this->_search."%' OR ", $this->_columns) . " LIKE '%".$this->_search."%'";
+		$search_list = implode(" LIKE '%".$this->_search."%' OR ", $searchable) . " LIKE '%".$this->_search."%'";
 
         // SQL statement
         if($this->_driver == 'mssql')
@@ -284,8 +297,21 @@ class Datatables
             ($key != null) ? $this->_columns[] = $key : null;
         }
 
+        // Total number of columns
+        $column_count = count($this->_columns);
+
+        // Check for only searchable columns
+        $searchable = [];
+        for ($i = 0; $i < $column_count; $i++)
+        {
+            if(isset($_GET["columns"][$i]["searchable"]) && $_GET["columns"][$i]["searchable"] == "true")
+            {
+                $searchable[] = $this->_columns[$i];
+            }
+        }
+
         // Build multi-search query from column list
-		$search_list = implode(" LIKE '%".$this->_search."%' OR ", $this->_columns) . " LIKE '%".$this->_search."%'";
+		$search_list = implode(" LIKE '%".$this->_search."%' OR ", $searchable) . " LIKE '%".$this->_search."%'";
 
         // SQL statement
         if($this->_driver == 'mssql')

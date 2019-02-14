@@ -1,5 +1,5 @@
 <!-- Page Header -->
-<div class="page-header has-menu">
+<div class="page-header">
     <div class="page-title">
         <h5><?= $title; ?></h5>
     </div>
@@ -63,7 +63,7 @@
         </div>
 
     </div>
-    
+
     <?php
     echo '<pre>';
     print_r($_SESSION);

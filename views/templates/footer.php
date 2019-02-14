@@ -15,6 +15,12 @@
 </div>
 
 <!-- Javascript -->
+<script src="<?= asset('js/bootstrap.min.js'); ?>"></script>
+<script src="<?= asset('plugins/select2/js/select2.min.js'); ?>"></script>
+<script src="<?= asset('plugins/moment/js/moment.min.js'); ?>"></script>
+<script src="<?= asset('plugins/datetimepicker/js/datetimepicker.min.js'); ?>"></script>
+<script src="<?= asset("plugins/datatables/js/datatables.min.js"); ?>"></script>
+<script src="<?= asset("plugins/datatables/js/datatables.bootstrap.min.js"); ?>"></script>
 <script src="<?= asset('js/unity.core.min.js'); ?>"></script>
 <script src="<?= asset('js/unity.min.js'); ?>"></script>
 <script src="<?= asset('js/watborg.js'); ?>"></script>

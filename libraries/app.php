@@ -170,6 +170,24 @@ class App
     }
 
     /**
+     * Service Categories
+     * --------------------------------------------
+     *
+     * @return array
+     */
+    public function service_categories()
+    {
+        $categories = [
+            'Records' => 'Records',
+            'Special Examinations' => 'Special Examinations',
+            'Surgical Procedures' => 'Surgical Procedures',
+            'Injections' => 'Injections'
+        ];
+
+        return $categories;
+    }
+
+    /**
      * User Titles
      * --------------------------------------------
      *
@@ -272,11 +290,11 @@ class App
         {
             $type = ($type == null) ? '' : ' alert-' . $type;
 
-            return '<div class="alert ' . $type . '" role="alert" data-auto-close="10"><div class="alert-content"><p>' . $message . '</p></div></div>';
+            return '<div class="alert ' . $type . '" role="alert" data-auto-close="15"><div class="alert-content"><p>' . $message . '</p></div></div>';
         }
         else
         {
-            switch ($type) 
+            switch ($type)
             {
                 case 'success':
                     return '<p class="text-success"><i class="icon-check-circle mr-1"></i>' . $message . '</p>';
@@ -289,7 +307,7 @@ class App
                 case 'warning':
                     return '<p class="text-warning"><i class="icon-exclamation-triangle mr-1"></i>' . $message . '</p>';
                     break;
-                
+
                 default:
                     return '<p class="text-primary"><i class="icon-info-circle mr-1"></i>' . $message . '</p>';
                     break;

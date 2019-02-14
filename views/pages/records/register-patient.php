@@ -1,7 +1,3 @@
-<!-- Stylesheets -->
-<link href="<?= asset('plugins/select2/css/select2.min.css'); ?>" rel="stylesheet">
-<link href="<?= asset('plugins/datetimepicker/css/datetimepicker.min.css'); ?>" rel="stylesheet">
-
 <!-- Page Header -->
 <div class="page-header has-menu">
     <div class="page-title">
@@ -19,24 +15,20 @@
 <div class="content boxed">
 
     <!-- Panel -->
-    <div class="panel panel-default bordered column-item">
+    <div class="panel panel-default bordered">
         <div class="panel-body">
             <div class="status"></div>
-            <form action="<?= site_url("users/create-user"); ?>" method="post">
+            <form action="<?= site_url("records/patient-registration"); ?>" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label class="label-required">Hospital Number</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="hospital_number" id="hospital_number" readonly tabindex="1">
-                            <?= select(['0'=>'New','1'=>'Old'], 'patient_type', null, null, 'form-control select2', 'id="patient_type" tabindex="1" data-width="30%" data-minimum-results-for-search="Infinity" data-clear'); ?>
+                            <input type="text" class="form-control" name="hospital_number" id="hospital_number" placeholder="e.g. 100/15" readonly tabindex="1">
+                            <?= select(['0'=>'New Patient','1'=>'Old Patient'], 'patient_type', null, ' ', 'form-control select2', 'id="patient_type" tabindex="1" data-placeholder="Patient Type" data-width="40%" data-minimum-results-for-search="Infinity" data-clear'); ?>
                             <div class="input-group-append">
                                 <button class="btn btn-secondary" type="button" id="patient_search" disabled tabindex="1">Search</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group offset-md-4 col-md-4">
-                        <label class="label-required">Service</label>
-                        <?= select($this->app->occupations(), 'occupation', null, ' ', 'form-control select2', ' tabindex="1" data-placeholder="Select Service" data-width="100%" data-clear'); ?>
                     </div>
                 </div>
                 <fieldset class="mt-3">
@@ -55,11 +47,11 @@
                         <div class="form-group col-md-3">
                             <label class="label-required d-block">Gender</label>
                             <label class="radio-inline radio-styled mt-2 mr-3">
-                                <input type="radio" name="gender"> Male
+                                <input type="radio" name="gender" value="Male"> Male
                                 <span class="tick"></span>
                             </label>
                             <label class="radio-inline radio-styled mt-2 mr-3">
-                                <input type="radio" name="gender"> Female
+                                <input type="radio" name="gender" value="Female"> Female
                                 <span class="tick"></span>
                             </label>
                         </div>
@@ -83,7 +75,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="label-required">Occupation</label>
-                            <?= select($this->app->occupations(), 'occupation', null, ' ', 'form-control select2', ' tabindex="1" data-placeholder="Select Occupation" data-tags="true" data-width="100%" data-clear'); ?>
+                            <select class="form-control select2" name="occupation" data-ajax--url="<?= site_url("data/occupations"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Occupation" data-minimum-input-length="2" data-width="100%" tabindex="1"></select>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="label-required">Religion</label>
@@ -96,32 +88,63 @@
                             <input type="text" name="address" class="form-control" placeholder="e.g. Akwele, Kasoa" tabindex="1">
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="label-required">Contact Number</label>
+                            <label class="label-required">Phone No.</label>
                             <input type="phone" name="phone" class="form-control" placeholder="e.g. 024xxxxxxx" tabindex="1">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label class="label-required">District</label>
-                            <select class="form-control select2" name="district" data-ajax--url="<?= site_url("data/districts"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select District" data-width="100%"></select>
+                            <label>District</label>
+                            <select class="form-control select2" name="district" data-ajax--url="<?= site_url("data/districts"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select District" data-minimum-input-length="2" data-width="100%" tabindex="1"></select>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="label-required">Locality</label>
-                            <select class="form-control select2" name="locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-width="100%"></select>
+                            <select class="form-control select2" name="locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-minimum-input-length="2" data-width="100%" tabindex="1"></select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="label-required">Next of Kin Name</label>
+                            <input type="text" name="relative_name" class="form-control" id="relative_name" placeholder="e.g. John Adongo" tabindex="1">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="label-required">Next of Kin Phone No.</label>
+                            <input type="phone" name="relative_phone" class="form-control" id="relative_phone" placeholder="e.g. 024xxxxxxx" tabindex="1">
                         </div>
                     </div>
                 </fieldset>
                 <fieldset class="mt-3 mb-3">
-                    <legend>Next of Kin Information</legend>
+                    <legend>Service Charges</legend>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label class="label-required">Full Name</label>
-                            <input type="text" name="relative_name" class="form-control" id="relative_name" placeholder="e.g. John Adongo" tabindex="1">
+                            <label class="label-required">Services</label>
+                            <select class="form-control select2-services" data-ajax--url="<?= site_url("data/services"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Service" data-width="100%" tabindex="1"></select>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Contact Number</label>
-                            <input type="phone" name="relative_phone" class="form-control" id="relative_phone" placeholder="e.g. 024xxxxxxx (Optional)" tabindex="1">
-                        </div>
+                    </div>
+                    <div class="form-group">
+                        <table class="table table-hover table-sm">
+                            <thead>
+                                <tr class="bg-light">
+                                    <th>Service Name</th>
+                                    <th>Category</th>
+                                    <th>Cost Price</th>
+                                    <th width="10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="service-list">
+                                <tr class="d-none">
+                                    <td class="price">0.00</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="service-total">
+                                    <td></td>
+                                    <td><b>Total Cost :</b></td>
+                                    <td><b id="total-cost">0.00</b></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </fieldset>
                 <input type="hidden" name="submit" value="submit">
@@ -133,22 +156,27 @@
 </div>
 
 <!-- Javascript -->
-<script src="<?= asset('plugins/select2/js/select2.min.js'); ?>"></script>
-<script src="<?= asset('plugins/moment/js/moment.min.js'); ?>"></script>
-<script src="<?= asset('plugins/datetimepicker/js/datetimepicker.min.js'); ?>"></script>
 <script type="text/javascript">
     $(document).ready(function(){
 
-        // Select2 bootstrap theme
-        $.fn.select2.defaults.set( "theme", "bootstrap" );
+        $('.select2-services').select2().on('select2:select', function (e) {
+            var data = e.params.data,
+                markup = '<tr><td>' + data.text + '<input type="hidden" name="service[]" value="' + data.id + '"></td>' +
+                         '<td>' + data.category + '</td>' +
+                         '<td class="price">' + data.price + '</td>' +
+                         '<td><button class="s2item btn btn-danger btn-xs">Remove</button></td></tr>';
 
-        // Select2
-        $('.select2').select2();
+            $('.service-list').append(markup);
+            $(this).val(null).trigger("change");
+            updateTotal();
+        });
 
-        // Datepicker
-        $('.datetimepicker').datetimepicker();
+        $(document).on('click', '.s2item', function(event) {
+            $(event.target).closest('tr').remove();
+            updateTotal();
+        });
 
-        // Hospital Number 
+        // Hospital Number
         $('#patient_type').on('change', function() {
             if(this.value == 1){
                 $('#patient_search').removeProp('disabled');
