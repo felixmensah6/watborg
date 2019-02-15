@@ -43,7 +43,7 @@ class Data extends Controller
                 'id' => $row['service_id'],
                 'text' => $row['service_name'],
                 'category' => $row['service_category'],
-                'price' => number_format($row['service_price'], 2)
+                'cost' => number_format($row['service_cost'], 2)
                 ];
         }
 

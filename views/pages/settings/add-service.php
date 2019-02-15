@@ -12,12 +12,12 @@
                 <?= select($this->app->service_categories(), 'service_category', null, ' ', 'form-control select2', 'tabindex="1" data-placeholder="Select Category" data-minimum-results-for-search="Infinity" data-width="100%" data-clear'); ?>
             </div>
             <div class="form-group">
-                <label>Service Price</label>
+                <label>Service Cost</label>
                 <div class="input-group spinner" data-trigger="spinner">
                     <div class="input-group-prepend">
                         <span class="input-group-text">GHS</span>
                     </div>
-                    <input type="text" class="form-control" name="service_price" value="0.00" data-rule="currency" data-step="1.00" tabindex="1">
+                    <input type="text" class="form-control" name="service_cost" value="0.00" data-rule="currency" data-step="1.00" tabindex="1">
                     <span class="input-group-append">
                         <button type="button" class="btn btn-default spin-up" data-spin="up"><i class="icon-chevron-up"></i></button>
                         <button type="button" class="btn btn-default spin-down" data-spin="down"><i class="icon-chevron-down"></i></button>

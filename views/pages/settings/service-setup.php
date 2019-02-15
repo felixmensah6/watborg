@@ -31,7 +31,7 @@
                             <th data-orderable="false">#</th>
                             <th>Service Name</th>
                             <th>Service Category</th>
-                            <th>Service Price</th>
+                            <th>Service Cost</th>
                             <th data-orderable="false">Action</th>
                         </tr>
                     </thead>
@@ -40,7 +40,7 @@
                             <th>#</th>
                             <th>Service Name</th>
                             <th>Service Category</th>
-                            <th>Service Price</th>
+                            <th>Service Cost</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>

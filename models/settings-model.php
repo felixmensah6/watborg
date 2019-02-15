@@ -38,7 +38,7 @@ class Settings_Model extends Model
               ->columns([
                   'service_name',
                   'service_category',
-                  'service_price'
+                  'service_cost'
               ], true)
               ->insert($values);
      }
@@ -57,7 +57,7 @@ class Settings_Model extends Model
               ->set([
                  'service_name' => '?',
                  'service_category' => '?',
-                 'service_price' => '?'])
+                 'service_cost' => '?'])
               ->where('service_id = ?')
               ->update($values);
      }

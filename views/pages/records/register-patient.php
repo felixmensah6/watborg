@@ -126,8 +126,8 @@
                             <thead>
                                 <tr class="bg-light">
                                     <th>Service Name</th>
-                                    <th>Category</th>
-                                    <th>Cost Price</th>
+                                    <th>Service Category</th>
+                                    <th>Service Cost</th>
                                     <th width="10%">Action</th>
                                 </tr>
                             </thead>
@@ -163,7 +163,7 @@
             var data = e.params.data,
                 markup = '<tr><td>' + data.text + '<input type="hidden" name="service[]" value="' + data.id + '"></td>' +
                          '<td>' + data.category + '</td>' +
-                         '<td class="price">' + data.price + '</td>' +
+                         '<td class="price">' + data.cost + '</td>' +
                          '<td><button class="s2item btn btn-danger btn-xs">Remove</button></td></tr>';
 
             $('.service-list').append(markup);

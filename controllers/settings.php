@@ -171,7 +171,7 @@ class Settings extends Controller
                 return ucwords($value);
             },
             'service_category' => null,
-            'service_price' => function($value)
+            'service_cost' => function($value)
             {
                 return number_format($value, 2);
             },
@@ -205,7 +205,7 @@ class Settings extends Controller
             // Post data
             $service = $this->input->post('service_name', 'string');
     		$category = $this->input->post('service_category', 'string');
-    		$price = $this->input->post('service_price');
+    		$cost = $this->input->post('service_cost');
 
             // Validate
             $this->input->validate($service, "Service Name", "required",
@@ -218,7 +218,7 @@ class Settings extends Controller
                     "required" => $this->app->alert('danger', $this->app_lang->required)
                 ]
             );
-            $this->input->validate($price, "Service Price", "required|min_value[0.01]",
+            $this->input->validate($cost, "Service Cost", "required|min_value[0.01]",
                 [
                     "required" => $this->app->alert('danger', $this->app_lang->required),
                     "min_value" => $this->app->alert('danger', $this->app_lang->minimum_value)
@@ -226,7 +226,7 @@ class Settings extends Controller
             );
 
             // Insert service
-            $this->settings_model->insert_service($service, $category, $price);
+            $this->settings_model->insert_service($service, $category, $cost);
 
             // Show alert message
             echo $this->app->alert('success', $this->app_lang->insert_success);
@@ -256,7 +256,7 @@ class Settings extends Controller
             // Post data
             $service = $this->input->post('service_name', 'string');
     		$category = $this->input->post('service_category', 'string');
-    		$price = $this->input->post('service_price');
+    		$cost = $this->input->post('service_cost');
 
             // Validate
             $this->input->validate($service, "Service Name", "required",
@@ -269,7 +269,7 @@ class Settings extends Controller
                     "required" => $this->app->alert('danger', $this->app_lang->required)
                 ]
             );
-            $this->input->validate($price, "Service Price", "required|min_value[0.01]",
+            $this->input->validate($cost, "Service Cost", "required|min_value[0.01]",
                 [
                     "required" => $this->app->alert('danger', $this->app_lang->required),
                     "min_value" => $this->app->alert('danger', $this->app_lang->minimum_value)
@@ -280,7 +280,7 @@ class Settings extends Controller
             $id = $this->security->decrypt_id($service_id);
 
             // Insert service
-            $this->settings_model->update_service($service, $category, $price, $id);
+            $this->settings_model->update_service($service, $category, $cost, $id);
 
             // Show alert message
             echo $this->app->alert('success', $this->app_lang->update_success);
