@@ -24,7 +24,7 @@ class Users extends Controller
                 'class' => null,
                 'attributes' => null,
                 'visible' => null,
-                'privilege' => null
+                'roles' => [1]
             ],
             [
                 'text' => 'Add User',
@@ -33,7 +33,7 @@ class Users extends Controller
                 'class' => null,
                 'attributes' => null,
                 'visible' => null,
-                'privilege' => 'add'
+                'roles' => [1]
             ],
             [
                 'text' => 'Edit User',
@@ -42,7 +42,7 @@ class Users extends Controller
                 'class' => null,
                 'attributes' => null,
                 'visible' => 'edit-user',
-                'privilege' => 'edit'
+                'roles' => [1]
             ],
             [
                 'text' => 'Reset Password',
@@ -51,7 +51,7 @@ class Users extends Controller
                 'class' => null,
                 'attributes' => null,
                 'visible' => 'reset-password',
-                'privilege' => 'edit'
+                'roles' => [1]
             ]
         ];
 
@@ -87,9 +87,6 @@ class Users extends Controller
         // Check for an active session else redirect
         $this->app->check_active_session();
 
-        // Check if user has access to this section
-        $this->app->restrict_access('add');
-
         // View data
         $data['title'] = 'Add User';
         $data['page_menu_list'] = $this->page_menu_list();
@@ -111,9 +108,6 @@ class Users extends Controller
     {
         // Check for an active session else redirect
         $this->app->check_active_session();
-        
-        // Check if user has access to this section
-        $this->app->restrict_access('edit');
 
         // Decrypted user id
         $user_id = $this->security->decrypt_id($userid);
@@ -142,9 +136,6 @@ class Users extends Controller
         // Check for an active session else redirect
         $this->app->check_active_session();
 
-        // Check if user has access to this section
-        $this->app->restrict_access('edit');
-
         // Decrypted user id
         $user_id = $this->security->decrypt_id($userid);
 
@@ -171,8 +162,8 @@ class Users extends Controller
         // Check for an active session else redirect
         $this->app->check_active_session();
 
-        // Check if form was submitted
-        if($this->input->post('submit'))
+        // Check if form was submitted and if access is allowed
+        if($this->app->deny_action('add') && $this->input->post('submit'))
         {
             // Post data
             $title = $this->input->post('title');
@@ -258,6 +249,11 @@ class Users extends Controller
             // Show alert message
             echo $this->app->alert('success', $this->app_lang->add_user_success);
         }
+        else
+        {
+            // Show alert message
+            echo $this->app->alert('danger', $this->app_lang->action_denied);
+        }
     }
 
     /**
@@ -272,8 +268,8 @@ class Users extends Controller
         // Check for an active session else redirect
         $this->app->check_active_session();
 
-        // Check if form was submitted
-        if($this->input->post('submit'))
+        // Check if form was submitted and if access is allowed
+        if($this->app->deny_action('edit') && $this->input->post('submit'))
         {
             // Post data
             $title = $this->input->post('title');
@@ -332,6 +328,11 @@ class Users extends Controller
             // Show alert message
             echo $this->app->alert('success', $this->app_lang->update_success);
         }
+        else
+        {
+            // Show alert message
+            echo $this->app->alert('danger', $this->app_lang->action_denied);
+        }
     }
 
     /**
@@ -346,8 +347,8 @@ class Users extends Controller
         // Check for an active session else redirect
         $this->app->check_active_session();
 
-        // Check if form was submitted
-        if($this->input->post('submit'))
+        // Check if form was submitted and if access is allowed
+        if($this->app->deny_action('edit') && $this->input->post('submit'))
         {
             // Post data
             $password = $this->input->post('password');
@@ -381,6 +382,11 @@ class Users extends Controller
             // Show alert message
             echo $this->app->alert('success', $this->app_lang->update_success);
         }
+        else
+        {
+            // Show alert message
+            echo $this->app->alert('danger', $this->app_lang->action_denied);
+        }
     }
 
     /**
@@ -393,7 +399,7 @@ class Users extends Controller
     {
         // Check for an active session else redirect
         $this->app->check_active_session();
-        
+
         // Load library
         $this->load->library('datatables');
 
@@ -457,12 +463,8 @@ class Users extends Controller
         // Check for an active session else redirect
         $this->app->check_active_session();
 
-        // Check if user has access to this section
-        if($this->app->restrict_access('trash', true))
-        {
-            show_http_response(404, $this->app_lang->action_denied);
-        }
-        else
+        // Check if user has access to this action
+        if($this->app->deny_action('trash'))
         {
             // Decrypt user id
             $user_id = $this->security->decrypt_id($userid);
@@ -480,6 +482,10 @@ class Users extends Controller
                 // Show alert message
                 echo $this->app_lang->delete_success;
             }
+        }
+        else
+        {
+            show_http_response(404, $this->app_lang->action_denied);
         }
     }
 }

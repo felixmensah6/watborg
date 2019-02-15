@@ -158,7 +158,7 @@
                     ];
 
                     // Load menu
-                    echo $this->app->sidebar($menu, $this->uri->segment(1), $this->session->role_level);
+                    echo $this->app->sidebar($menu, $this->session->role_level);
                 ?>
             </div>
 

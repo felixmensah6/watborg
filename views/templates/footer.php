@@ -14,6 +14,23 @@
 
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="page-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title" >Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Loading...
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Javascript -->
 <script src="<?= asset('js/bootstrap.min.js'); ?>"></script>
 <script src="<?= asset('plugins/select2/js/select2.min.js'); ?>"></script>

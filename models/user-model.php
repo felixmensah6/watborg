@@ -104,7 +104,7 @@ class User_Model extends Model
              ->update([1, $username]);
     }
 
-     /**
+    /**
  	  * Create New User
  	  * --------------------------------------------
       *

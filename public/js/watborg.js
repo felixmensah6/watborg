@@ -28,8 +28,8 @@ function submitForm(form, add = true, reload = false){
 			}
 
 			if(reload === true){
-				//var datatable = $("#records").DataTable();
-				//datatable.ajax.reload();
+				var datatable = $("#records").DataTable();
+				datatable.ajax.reload();
 			}
 
 		})
@@ -107,7 +107,8 @@ function updateTotal(){
     // iterate through each td based on class and add the values
     $(".price").each(function() {
 
-        var value = $(this).text();
+        var value = $(this).text(),
+            value = value.replace(',' , '');
         // add only if the value is number
         if(!isNaN(value) && value.length != 0) {
             sum += parseFloat(value);
@@ -118,13 +119,50 @@ function updateTotal(){
 }
 
 /**
+ * Help/Support Modal
+ * --------------------------------------------
+ */
+$('.help-modal').on('click', function(){
+	var dataURL = $(this).attr('data-href');
+	$('.modal-title').html('Help');
+	$('.modal-body').load(dataURL, function(){
+		$('#support-modal').modal({show: true});
+	});
+});
+
+
+/**
+ * Page Modal
+ * --------------------------------------------
+ */
+$('.load-modal').on('click', function(){
+	var dataURL = $(this).attr('data-url'),
+		dataTitle = $(this).attr('data-title');
+	$('.modal-title').html(dataTitle);
+	$('.modal-body').load(dataURL, function(){
+		$('#page-modal').modal({show: true});
+	});
+});
+
+$('#records').on('click','.load-modal', function(e) {
+	var dataURL = $(this).attr('data-url'),
+		dataTitle = $(this).attr('data-title');
+	$('.modal-title').html(dataTitle);
+	$('.modal-body').load(dataURL, function(){
+	 	$('#page-modal').modal({show: true});
+	});
+});
+
+/**
  * Initialize Datatables
  * --------------------------------------------
  */
- var this_table = $('#records'),
-     data_ajax = $(this_table).attr('data-ajax'),
-     data_save_state = $(this_table).attr('data-save-state'),
-     data_targets = JSON.parse($(this_table).attr('data-targets'));
+var this_table = $('#records'),
+    data_ajax = $(this_table).attr('data-ajax'),
+    data_save_state = $(this_table).attr('data-save-state'),
+    data_targets = $(this_table).attr('data-targets'),
+    data_targets = (data_targets != null) ? data_targets : '[]';
+    data_targets = JSON.parse(data_targets);
 
 $(this_table).DataTable({
     "processing": true,

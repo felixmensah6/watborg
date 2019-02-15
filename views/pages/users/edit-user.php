@@ -8,7 +8,7 @@
             <i class="icon-question-circle"></i>
         </a>
     </div>
-    <?= $this->app->page_menu($page_menu_list); ?>
+    <?= $this->app->page_menu($page_menu_list, $this->session->role_level); ?>
 </div>
 
 <!-- Content -->
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <input type="hidden" name="submit" value="submit">
-                <button onclick="submitForm(this.form, false);" class="btn btn-primary" tabindex="1">Submit</button>
+                <button onclick="submitForm(this.form, false);" type="button" class="btn btn-primary" tabindex="1">Submit</button>
             </form>
         </div>
     </div>

@@ -24,7 +24,7 @@ class Records extends Controller
                 'class' => null,
                 'attributes' => null,
                 'visible' => null,
-                'privilege' => 'add'
+                'roles' => [1, 6]
             ],
             [
                 'text' => 'Patient Records',
@@ -33,7 +33,7 @@ class Records extends Controller
                 'class' => null,
                 'attributes' => null,
                 'visible' => null,
-                'privilege' => null
+                'roles' => [1, 6]
             ]
         ];
 
@@ -69,9 +69,6 @@ class Records extends Controller
         // Check for an active session else redirect
         $this->app->check_active_session();
 
-        // Check if user has access to this section
-        $this->app->restrict_access('add');
-
         // View data
         $data['title'] = 'Patient Records';
         $data['page_menu_list'] = $this->page_menu_list();
@@ -93,8 +90,8 @@ class Records extends Controller
         // Check for an active session else redirect
         $this->app->check_active_session();
 
-        // Check if form was submitted
-        if($this->input->post('submit'))
+        // Check if form was submitted and if access is allowed
+        if($this->app->deny_action('add') && $this->input->post('submit'))
         {
             // Post data
             $hospital_number = $this->input->post('hospital_number');
@@ -202,6 +199,11 @@ class Records extends Controller
 
             // Show alert message
             echo $this->app->alert('success', $this->app_lang->add_patient_success);
+        }
+        else
+        {
+            // Show alert message
+            echo $this->app->alert('danger', $this->app_lang->action_denied);
         }
     }
 }

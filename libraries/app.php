@@ -42,17 +42,19 @@ class App
      * --------------------------------------------
      *
      * @param array $list An array of the menu list
-     * @param string $active The currently selected menu
      * @param string $role The user role
      * @return string
      */
-    public function sidebar($list, $active, $role)
+    public function sidebar($list, $role)
     {
         // ul start tag
         $build = '<ul class="sidebar-nav">';
 
         // Count menu groups
         $total_groups = count($list);
+
+        // Current page
+        $active = $this->uri->segment(1);
 
         // Loop and display menu groups
         for($i = 0; $i < $total_groups; $i++)
@@ -100,9 +102,10 @@ class App
      * --------------------------------------------
      *
      * @param array $list An array of the menu list
+     * @param string $role The user role
      * @return string
      */
-    public function page_menu($list)
+    public function page_menu($list, $role)
     {
         // Count list array
         $count = count($list);
@@ -119,9 +122,10 @@ class App
             // Add active css class
             $active = ($current == $list[$i]['active']) ? ' active' : null;
 
-            // Check if user has the privilege to access this section
-            if($list[$i]['privilege'] == null || $this->privileges($list[$i]['privilege']) == 1)
+            // Check if user has access to this section
+            if(in_array($role, $list[$i]['roles']))
             {
+                // Display menu
                 if($list[$i]['visible'] !== null && $list[$i]['visible'] == $current)
                 {
                     $build .= '<a href="' . site_url($list[$i]['url']) . '" class="ns-item' . $active . '">' . $list[$i]['text'] . '</a>';
@@ -131,7 +135,6 @@ class App
                     $build .= '<a href="' . site_url($list[$i]['url']) . '" class="ns-item' . $active . '">' . $list[$i]['text'] . '</a>';
                 }
             }
-
         }
 
         // closing tags
@@ -375,16 +378,13 @@ class App
     }
 
     /**
-	 * Restrict Access
+	 * Deny Action
 	 * --------------------------------------------
      *
      * @return string $key The privileges array key
-     * @return bool $return Return true or false instead of redirecting
-     * @return array $role The role array
-     * @return bool $ajax Set to true to redirect with javascript
      * @return void
 	 */
-    public function restrict_access($key, $return = false, $role = null, $ajax = false)
+    public function deny_action($key)
     {
         // Privileges array
         $privileges = [
@@ -394,37 +394,13 @@ class App
             'delete' => $this->session->privilege_delete,
         ];
 
-        $redirect_url = site_url('access-denied');
-
-        if($role == null && $privileges[$key] == 0)
+        if($privileges[$key] != 1)
         {
-            if($ajax === true)
-            {
-                exit('<script>window.location = "' . $redirect_url . '";</script>');
-            }
-            elseif($return === true)
-            {
-                return true;
-            }
-            else
-            {
-                header("Location: " . $redirect_url);
-            }
+            return false;
         }
-        elseif(is_array($role) && !in_array($key, $role))
+        else
         {
-            if($ajax === true)
-            {
-                exit('<script>window.location = "' . $redirect_url . '";</script>');
-            }
-            elseif($return === true)
-            {
-                return true;
-            }
-            else
-            {
-                header("Location: " . $redirect_url);
-            }
+            return true;
         }
     }
 }

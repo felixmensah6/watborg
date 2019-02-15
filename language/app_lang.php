@@ -7,6 +7,7 @@
  */
 
 // Actions Language
+$lang['insert_success'] = 'Record was succesfully saved';
 $lang['delete_success'] = 'Record was succesfully deleted';
 $lang['update_success'] = 'Your changes have been saved';
 $lang['action_denied'] = 'Unable to continue. Access denied!';
@@ -22,6 +23,7 @@ $lang['name_exists'] = 'Your %s already exists and cannot be used';
 $lang['password_match'] = 'Your passwords do not match';
 $lang['valid_password'] = 'Your %s must contain at least 1 letter and 1 number';
 $lang['password_change'] = 'Password saved! Logging you in %s seconds';
+$lang['minimum_value'] = '%s should not be less than %s';
 
 // User Language
 $lang['add_user_success'] = 'New user account successfully created';

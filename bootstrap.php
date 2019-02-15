@@ -19,7 +19,8 @@
  *
  */
 $bootstrap['model'] = [
-    'user-model'
+    'user-model',
+    'settings-model'
 ];
 
 /**

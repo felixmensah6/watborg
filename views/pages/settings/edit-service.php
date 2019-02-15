@@ -5,14 +5,14 @@
 <div class="panel mb-0">
     <div class="panel-body p-0">
         <div class="status"></div>
-        <form action="<?= site_url("settings/create-service"); ?>" method="post">
+        <form action="<?= site_url("settings/update-service/" . $service_id); ?>" method="post">
             <div class="form-group">
                 <label class="label-required">Service Name</label>
-                <input type="text" name="service_name" class="form-control" placeholder="e.g. Consultation" tabindex="1">
+                <input type="text" name="service_name" class="form-control" value="<?= $row['service_name']; ?>" placeholder="e.g. Consultation" tabindex="1">
             </div>
             <div class="form-group">
                 <label class="label-required">Service Category</label>
-                <?= select($this->app->service_categories(), 'service_category', null, ' ', 'form-control select2', 'tabindex="1" data-placeholder="Select Category" data-minimum-results-for-search="Infinity" data-width="100%" data-clear'); ?>
+                <?= select($this->app->service_categories(), 'service_category', $row['service_category'], ' ', 'form-control select2', 'tabindex="1" data-placeholder="Select Category" data-minimum-results-for-search="Infinity" data-width="100%" data-clear'); ?>
             </div>
             <div class="form-group">
                 <label>Service Price</label>
@@ -20,7 +20,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">GHS</span>
                     </div>
-                    <input type="text" class="form-control" name="service_price" value="0.00" data-rule="currency" data-step="1.00" tabindex="1">
+                    <input type="text" class="form-control" name="service_price" value="<?= $row['service_price']; ?>" data-rule="currency" data-step="1.00" tabindex="1">
                     <span class="input-group-append">
                         <button type="button" class="btn btn-default spin-up" data-spin="up"><i class="icon-chevron-up"></i></button>
                         <button type="button" class="btn btn-default spin-down" data-spin="down"><i class="icon-chevron-down"></i></button>
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <input type="hidden" name="submit" value="submit">
-            <button onclick="submitForm(this.form, true, true);" type="button" class="btn btn-primary mt-3" tabindex="1">Submit</button>
+            <button onclick="submitForm(this.form, fales, true);" type="button" class="btn btn-primary mt-3" tabindex="1">Submit</button>
         </form>
     </div>
 </div>
