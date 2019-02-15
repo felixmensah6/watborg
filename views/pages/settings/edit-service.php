@@ -1,6 +1,3 @@
-<!-- Stylesheets -->
-<link href="<?= asset('plugins/select2/css/select2.min.css'); ?>" rel="stylesheet">
-
 <!-- Panel -->
 <div class="panel mb-0">
     <div class="panel-body p-0">

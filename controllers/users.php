@@ -464,7 +464,7 @@ class Users extends Controller
         $this->app->check_active_session();
 
         // Check if user has access to this action
-        if($this->app->deny_action('trash'))
+        if($this->app->deny_action('delete'))
         {
             // Decrypt user id
             $user_id = $this->security->decrypt_id($userid);
