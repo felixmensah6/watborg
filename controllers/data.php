@@ -32,6 +32,7 @@ class Data extends Controller
 
         // Load model
         $this->load->model('data-model');
+
         $query = $this->input->get('q');
         $services = $this->data_model->services($query);
 
@@ -62,6 +63,7 @@ class Data extends Controller
 
         // Load model
         $this->load->model('data-model');
+
         $query = $this->input->get('q');
         $occupations = $this->data_model->occupations($query);
 
@@ -90,6 +92,7 @@ class Data extends Controller
 
         // Load model
         $this->load->model('data-model');
+
         $query = $this->input->get('q');
         $districts = $this->data_model->districts($query);
 
@@ -118,6 +121,7 @@ class Data extends Controller
 
         // Load model
         $this->load->model('data-model');
+
         $query = $this->input->get('q');
         $localities = $this->data_model->localities($query);
 

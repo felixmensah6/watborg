@@ -237,4 +237,88 @@ class Settings extends Controller
             echo $this->app->alert('danger', $this->app_lang->action_denied);
         }
     }
+
+    /**
+	 * Update Service
+	 * --------------------------------------------
+     *
+     * @param int $service_id The service id
+     * @return void
+	 */
+    public function update_service($service_id = '')
+    {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+
+        // Check if form was submitted and if access is allowed
+        if($this->app->deny_action('edit') && $this->input->post('submit'))
+        {
+            // Post data
+            $service = $this->input->post('service_name', 'string');
+    		$category = $this->input->post('service_category', 'string');
+    		$price = $this->input->post('service_price');
+
+            // Validate
+            $this->input->validate($service, "Service Name", "required",
+                [
+                    "required" => $this->app->alert('danger', $this->app_lang->required)
+                ]
+            );
+            $this->input->validate($category, "Service Category", "required",
+                [
+                    "required" => $this->app->alert('danger', $this->app_lang->required)
+                ]
+            );
+            $this->input->validate($price, "Service Price", "required|min_value[0.01]",
+                [
+                    "required" => $this->app->alert('danger', $this->app_lang->required),
+                    "min_value" => $this->app->alert('danger', $this->app_lang->minimum_value)
+                ]
+            );
+
+            // Decrypted service id
+            $id = $this->security->decrypt_id($service_id);
+
+            // Insert service
+            $this->settings_model->update_service($service, $category, $price, $id);
+
+            // Show alert message
+            echo $this->app->alert('success', $this->app_lang->update_success);
+        }
+        else
+        {
+            // Show alert message
+            echo $this->app->alert('danger', $this->app_lang->action_denied);
+        }
+    }
+
+    /**
+	 *----------------------------
+	 * Delete Service
+	 *
+     * @param int $service_id The service id
+     * @return void
+	 */
+    public function delete_service($service_id = '')
+    {
+        // Check for an active session else redirect
+        $this->app->check_active_session();
+
+        // Check if user has access to this action
+        if($this->app->deny_action('delete'))
+        {
+            // Decrypt user id
+            $service_id = $this->security->decrypt_id($service_id);
+
+            // delete record
+            $this->settings_model->delete_service($service_id);
+
+            // Show alert message
+            echo $this->app_lang->delete_success;
+        }
+        else
+        {
+            show_http_response(404, $this->app_lang->action_denied);
+        }
+    }
 }

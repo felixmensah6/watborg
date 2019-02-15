@@ -25,7 +25,7 @@
     <div class="panel panel-default bordered">
         <div class="panel-body" id="table-loader">
             <div class="table-responsive">
-                <table id="records" class="table table-striped table-hover" width="100%" data-ajax="<?= site_url('settings/display-services/'); ?>" data-save-state="true" data-page-length="25" data-targets="[0, -1]" data-order="[[ 1, &quot;asc&quot; ]]">
+                <table id="records" class="table table-striped table-hover" width="100%" data-ajax="<?= site_url('settings/display-services/'); ?>" data-save-state="true" data-page-length="10" data-targets="[0, -1]" data-order="[[ 1, &quot;asc&quot; ]]">
                     <thead>
                         <tr>
                             <th data-orderable="false">#</th>

@@ -42,4 +42,39 @@ class Settings_Model extends Model
               ], true)
               ->insert($values);
      }
+
+     /**
+ 	   * Update Service
+ 	   * --------------------------------------------
+       *
+       * @return void
+ 	   */
+     public function update_service()
+     {
+         $values = func_get_args();
+         $this->db
+              ->table('services')
+              ->set([
+                 'service_name' => '?',
+                 'service_category' => '?',
+                 'service_price' => '?'])
+              ->where('service_id = ?')
+              ->update($values);
+     }
+
+
+     /**
+      * Delete Service
+      * --------------------------------------------
+      *
+      * @param int $service_id The service id
+      * @return void
+      */
+     public function delete_service($service_id)
+     {
+         $this->db
+              ->table('services')
+              ->where('service_id = ?')
+              ->delete([$service_id]);
+     }
 }

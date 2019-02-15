@@ -28,7 +28,7 @@
                 </div>
             </div>
             <input type="hidden" name="submit" value="submit">
-            <button onclick="submitForm(this.form, fales, true);" type="button" class="btn btn-primary mt-3" tabindex="1">Submit</button>
+            <button onclick="submitForm(this.form, false, true);" type="button" class="btn btn-primary mt-3" tabindex="1">Submit</button>
         </form>
     </div>
 </div>
