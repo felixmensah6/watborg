@@ -29,12 +29,20 @@ class App
      * Check for Active Session
      * --------------------------------------------
      *
+     * @param array $roles An array of role levels e.g [1, 2, 3]
      * @return array
      */
-    public function check_active_session()
+    public function check_active_session($roles = null)
     {
         // Check if already logged in and redirect
         $this->session->check("user_id", site_url("login"), true);
+
+        // Check user role or redirect
+        if($roles != null && !in_array($this->session->role_level, $roles))
+        {
+            // Stop execution and redirect
+            exit(redirect(site_url("access-denied")));
+        }
     }
 
     /**
@@ -285,15 +293,16 @@ class App
 	 * @param string $type The type of alert
 	 * @param string $message Alert message
 	 * @param string $text Text only alert
+	 * @param int $auto_close_delay Seconds to auto close alert
 	 * @return string
 	 */
-	public function alert($type, $message, $text = false)
+	public function alert($type, $message, $text = false, $auto_close_delay = 10)
     {
         if($text == false)
         {
             $type = ($type == null) ? '' : ' alert-' . $type;
 
-            return '<div class="alert ' . $type . '" role="alert" data-auto-close="15"><div class="alert-content"><p>' . $message . '</p></div></div>';
+            return '<div class="alert alert-dismissible ' . $type . '" role="alert" data-auto-close="' . $auto_close_delay . '"><div class="alert-content"><p>' . $message . '</p></div><button type="button" class="close" data-dismiss="alert"><span>×</span></button></div>';
         }
         else
         {

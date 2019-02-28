@@ -51,7 +51,7 @@ class Security
 	 * --------------------------------------------
 	 *
 	 * Generates a unique random lowercase alphanumeric string
-	 * @param integer $limit The length of the generated string
+	 * @param int $limit The length of the generated string
 	 * @return string
 	 */
     public function generate_unique_string($limit)
@@ -59,14 +59,39 @@ class Security
     	return substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $limit);
     }
 
+    /**
+	 * Generate Unique Numbers
+	 * --------------------------------------------
+	 *
+	 * Generates a unique random integer
+	 * NOTE: Min Limit is 10 and Max Limit is 16 and the higher the
+	 * limit, the more unique it becomes.
+	 * @param int $limit The length of the generated integer
+	 * @return string
+	 */
+    public function generate_unique_int($limit = 10)
+	{
+		$rand = random_int(10, 99);
+        $time = str_replace(['0.', ' '], '', microtime());
+
+		if($limit >= 10 && $limit <= 16)
+		{
+			return substr($time, 0, 6) . substr($time, (8 - $limit)) . $rand;
+		}
+		else
+		{
+			trigger_error('The length range must be from 10 to 16.');
+		}
+    }
+
 	/**
 	 * Generate Random Characters
 	 * --------------------------------------------
 	 *
 	 * Generates a string with random uppercase and lowercase alphanumeric string
-	 * @param integer $limit The length of the generated string
-	 * @param boolean $random_case Include uppercase alphabet caracters randomly
-	 * @param boolean $include_digits Include digits randomly
+	 * @param int $limit The length of the generated string
+	 * @param bool $random_case Include uppercase alphabet caracters randomly
+	 * @param bool $include_digits Include digits randomly
 	 * @return string
 	 */
 	public function random_characters($limit = 10, $random_case = false, $include_digits = false)
@@ -92,7 +117,7 @@ class Security
 	 * --------------------------------------------
 	 *
 	 * Encrypts integers only
-	 * @param integer $data The number to encrypt
+	 * @param int $data The number to encrypt
 	 * @return string
 	 */
 	public function encrypt_id($data)
@@ -110,7 +135,7 @@ class Security
 	 *
 	 * Decrypts encrypted integers only
 	 * @param string $data The encrypted integer to decrypt
-	 * @return integer
+	 * @return int
 	 */
 	public function decrypt_id($data)
 	{

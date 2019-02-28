@@ -146,7 +146,7 @@
                                     'roles' => [1]
                                 ],
                                 [
-                                    'text' => 'Setup Users',
+                                    'text' => 'Users',
                                     'url' => 'users',
                                     'class' => null,
                                     'icon' => 'icon-user-cog',

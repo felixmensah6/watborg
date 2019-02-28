@@ -57,6 +57,9 @@ class Settings extends Controller
 	 */
     public function index()
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session([1]);
+
         // View data
         $data['title'] = 'System Setup';
         $data['page_menu_list'] = $this->page_menu_list();
@@ -76,7 +79,7 @@ class Settings extends Controller
     public function service_setup()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // View data
         $data['title'] = 'Service Setup';
@@ -97,7 +100,7 @@ class Settings extends Controller
     public function drug_setup()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // View data
         $data['title'] = 'Drug Setup';
@@ -118,7 +121,7 @@ class Settings extends Controller
     public function add_service()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Load view
         $this->load->view('pages/settings/add-service');
@@ -134,7 +137,7 @@ class Settings extends Controller
     public function edit_service($service_id = '')
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Decrypted service id
         $id = $this->security->decrypt_id($service_id);
@@ -156,7 +159,7 @@ class Settings extends Controller
     public function display_services()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Load library
         $this->load->library('datatables');
@@ -197,7 +200,7 @@ class Settings extends Controller
     public function create_service()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Check if form was submitted and if access is allowed
         if($this->app->deny_action('add') && $this->input->post('submit'))
@@ -248,7 +251,7 @@ class Settings extends Controller
     public function update_service($service_id = '')
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Check if form was submitted and if access is allowed
         if($this->app->deny_action('edit') && $this->input->post('submit'))
@@ -302,7 +305,7 @@ class Settings extends Controller
     public function delete_service($service_id = '')
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Check if user has access to this action
         if($this->app->deny_action('delete'))

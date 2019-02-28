@@ -9,11 +9,13 @@
 
     <!-- Stylesheets -->
     <link href="<?= asset('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link href="<?= asset('plugins/select2/css/select2.min.css'); ?>" rel="stylesheet">
+    <link href="<?= asset('plugins/datetimepicker/css/datetimepicker.min.css'); ?>" rel="stylesheet">
+    <link href="<?= asset("plugins/datatables/css/datatables.bootstrap.css"); ?>" rel="stylesheet">
     <link href="<?= asset('css/unity.css'); ?>" rel="stylesheet">
 
     <!-- Javascript -->
     <script src="<?= asset('js/jquery.min.js'); ?>"></script>
-    <script src="<?= asset('js/bootstrap.min.js'); ?>"></script>
 </head>
 
 <body>
@@ -61,6 +63,12 @@
     </div>
 
     <!-- Javascript -->
+    <script src="<?= asset('js/bootstrap.min.js'); ?>"></script>
+    <script src="<?= asset('plugins/select2/js/select2.min.js'); ?>"></script>
+    <script src="<?= asset('plugins/moment/js/moment.min.js'); ?>"></script>
+    <script src="<?= asset('plugins/datetimepicker/js/datetimepicker.min.js'); ?>"></script>
+    <script src="<?= asset("plugins/datatables/js/datatables.min.js"); ?>"></script>
+    <script src="<?= asset("plugins/datatables/js/datatables.bootstrap.min.js"); ?>"></script>
     <script src="<?= asset('js/unity.core.min.js'); ?>"></script>
     <script src="<?= asset('js/unity.min.js'); ?>"></script>
     <script src="<?= asset('js/watborg.js'); ?>"></script>

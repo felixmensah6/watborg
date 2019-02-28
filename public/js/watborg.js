@@ -18,8 +18,8 @@ function submitForm(form, add = true, reload = false){
 	// Submit data
 	$.post(url, formData)
 		.done(function (data) {
-			target.html(data);
-			//datatable.ajax.reload();
+            // Show success message
+            target.html(data);
 
 			// Only clear form if data is being added
 			if(add === true){
@@ -27,18 +27,104 @@ function submitForm(form, add = true, reload = false){
 				$(select2).val(null).trigger("change");
 			}
 
+            // Reload datatable if true
 			if(reload === true){
 				var datatable = $("#records").DataTable();
 				datatable.ajax.reload();
 			}
-
 		})
 		.fail(function (jqXHR, textStatus, errorThrown) {
+
+            // Show error message
 			target.html(jqXHR.responseText);
+
 		})
 		.always(function (data) {
 			loader.removeClass("loading");
 			$('html,body').animate({scrollTop: target.offset().top - 100}, 1000);
+		});
+
+	// Prevent default action
+	event.preventDefault();
+}
+
+/**
+ * Form Submit Function
+ * --------------------------------------------
+ */
+function submitFormAdvance(form, add = true, reload = false, alert = false){
+
+	// Variables
+	var url = $(form).attr("action"),
+		formData = $(form).serializeArray(),
+		loader = $(form),
+        select2 = $("[data-clear]"),
+		target = $(".status");
+
+	// Show loader
+	loader.addClass("loading");
+
+	// Submit data
+	$.post(url, formData)
+		.done(function (data) {
+            // Show success message
+            if(alert === true){
+                $.alertable.alert(data, {html: true, closeButton: true, okButton: ''});
+            }else{
+                target.html(data);
+            }
+
+			// Only clear form if data is being added
+			if(add === true){
+				$(form)[0].reset();
+				$(select2).val(null).trigger("change");
+                $(".selected-service").remove();
+			}
+
+            // Reload datatable if true
+			if(reload === true){
+				var datatable = $("#records").DataTable();
+				datatable.ajax.reload();
+			}
+		})
+		.fail(function (jqXHR, textStatus, errorThrown) {
+
+            // Show error message
+			target.html(jqXHR.responseText);
+
+		})
+		.always(function (data) {
+			loader.removeClass("loading");
+			$('html,body').animate({scrollTop: target.offset().top - 100}, 1000);
+		});
+
+	// Prevent default action
+	event.preventDefault();
+}
+
+/**
+ * Search and Populate Form with Patient Details
+ * --------------------------------------------
+ */
+function getPatient(button, url, inputID){
+
+	// Variables
+	var inputData = $(inputID).val()
+        $this = $(button);
+
+	// Show loader
+	$this.addClass("loading loading-inverse disabled");
+
+	// Submit data
+	$.post(url, inputData)
+		.done(function (data) {
+            //
+		})
+		.fail(function (jqXHR, textStatus, errorThrown) {
+            //
+		})
+		.always(function (data) {
+			//$this.removeClass("loading");
 		});
 
 	// Prevent default action

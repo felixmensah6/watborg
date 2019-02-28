@@ -48,6 +48,9 @@ class Records extends Controller
 	 */
     public function index()
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session([1, 6]);
+
         // View data
         $data['title'] = 'Register Patient';
         $data['page_menu_list'] = $this->page_menu_list();
@@ -67,7 +70,7 @@ class Records extends Controller
     public function patient_records()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1, 6]);
 
         // View data
         $data['title'] = 'Patient Records';
@@ -88,14 +91,13 @@ class Records extends Controller
     public function patient_registration()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1, 6]);
 
         // Check if form was submitted and if access is allowed
         if($this->app->deny_action('add') && $this->input->post('submit'))
         {
             // Post data
             $hospital_number = $this->input->post('hospital_number');
-            $patient_type = $this->input->post('patient_type');
             $firstname = $this->input->post('firstname', 'string');
     		$lastname = $this->input->post('lastname', 'string');
             $gender = $this->input->post('gender');
@@ -113,11 +115,6 @@ class Records extends Controller
             $service = ($service != null) ? $service : null;
 
             // Validate
-            $this->input->validate($patient_type, "Type of Patient", "required",
-                [
-                    "required" => $this->app->alert('danger', $this->app_lang->required)
-                ]
-            );
             $this->input->validate($lastname, "Surname", "required|min_length[3]|valid_name",
                 [
                     "required" => $this->app->alert('danger', $this->app_lang->required),
@@ -198,7 +195,15 @@ class Records extends Controller
             //$this->user_model->insert_user($username, $password, $title, $firstname, $lastname, $email, $role, $now, $privilege_create, $privilege_update, $privilege_trash, $temp_password);
 
             // Show alert message
-            echo $this->app->alert('success', $this->app_lang->add_patient_success);
+            echo '<h6 class="text-success">Registration was successful!</h6>' .
+                 '<dl class="row">' .
+                 '<dt class="col-sm-4">Patient Name:</dt>' .
+                 '<dd class="col-sm-8">' . ucwords($firstname . ' ' . $lastname) . '</dd>' .
+                 '<dt class="col-sm-4">Hosp. Number:</dt>' .
+                 '<dd class="col-sm-8">145/19</dd>' .
+                 '<dt class="col-sm-4">Date of Birth:</dt>' .
+                 '<dd class="col-sm-8">' . time_format($birthday, 'DD-MM-YYYY') . '</dd>' .
+                 '</dl>';
         }
         else
         {

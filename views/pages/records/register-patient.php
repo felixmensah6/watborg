@@ -20,13 +20,12 @@
             <div class="status"></div>
             <form action="<?= site_url("records/patient-registration"); ?>" method="post">
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label class="label-required">Hospital Number</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="hospital_number" id="hospital_number" placeholder="e.g. 100/15" readonly tabindex="1">
-                            <?= select(['0'=>'New Patient','1'=>'Old Patient'], 'patient_type', null, ' ', 'form-control select2', 'id="patient_type" tabindex="1" data-placeholder="Patient Type" data-width="40%" data-minimum-results-for-search="Infinity" data-clear'); ?>
+                            <input type="text" name="hospital_number" id="patient_search" class="form-control" placeholder="Auto" tabindex="1">
                             <div class="input-group-append">
-                                <button class="btn btn-secondary" type="button" id="patient_search" disabled tabindex="1">Search</button>
+                                <button onclick="getPatient(this, '#', 'patient_search');" class="btn btn-secondary" type="button">Search</button>
                             </div>
                         </div>
                     </div>
@@ -99,7 +98,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label class="label-required">Locality</label>
-                            <select class="form-control select2" name="locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-minimum-input-length="2" data-width="100%" tabindex="1"></select>
+                            <select class="form-control select2" name="locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-minimum-input-length="2" data-width="100%" data-name="locality" tabindex="1"></select>
                         </div>
                     </div>
                     <div class="form-row">
@@ -148,7 +147,7 @@
                     </div>
                 </fieldset>
                 <input type="hidden" name="submit" value="submit">
-                <button onclick="submitForm(this.form);" type="button" class="btn btn-primary" tabindex="1">Submit</button>
+                <button onclick="submitFormAdvance(this.form, true, false, true);" type="button" class="btn btn-primary" tabindex="1">Submit</button>
             </form>
         </div>
     </div>
@@ -161,7 +160,8 @@
 
         $('.select2-services').select2().on('select2:select', function (e) {
             var data = e.params.data,
-                markup = '<tr><td>' + data.text + '<input type="hidden" name="service[]" value="' + data.id + '"></td>' +
+                markup = '<tr class="selected-service">' +
+                         '<td>' + data.text + '<input type="hidden" name="service[]" value="' + data.id + '"></td>' +
                          '<td>' + data.category + '</td>' +
                          '<td class="price">' + data.cost + '</td>' +
                          '<td><button class="s2item btn btn-danger btn-xs">Remove</button></td></tr>';
@@ -174,17 +174,6 @@
         $(document).on('click', '.s2item', function(event) {
             $(event.target).closest('tr').remove();
             updateTotal();
-        });
-
-        // Hospital Number
-        $('#patient_type').on('change', function() {
-            if(this.value == 1){
-                $('#patient_search').removeProp('disabled');
-                $('#hospital_number').removeProp('readonly');
-            }else{
-                $('#patient_search').prop('disabled', true);
-                $('#hospital_number').prop('readonly', true);
-            }
         });
 
         $('.datetimepicker').on("dp.change", function (e) {

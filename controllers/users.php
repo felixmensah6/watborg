@@ -18,7 +18,7 @@ class Users extends Controller
     {
         $menu = [
             [
-                'text' => 'User Accounts',
+                'text' => 'Manage Users',
                 'url' => 'users',
                 'active' => null,
                 'class' => null,
@@ -66,8 +66,11 @@ class Users extends Controller
 	 */
     public function index()
     {
+        // Check for an active session else redirect
+        $this->app->check_active_session([1]);
+
         // View data
-        $data['title'] = 'User Accounts';
+        $data['title'] = 'Manage Users';
         $data['page_menu_list'] = $this->page_menu_list();
 
         // Load view
@@ -85,7 +88,7 @@ class Users extends Controller
     public function add_user()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // View data
         $data['title'] = 'Add User';
@@ -107,7 +110,7 @@ class Users extends Controller
     public function edit_user($userid = '')
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Decrypted user id
         $user_id = $this->security->decrypt_id($userid);
@@ -134,7 +137,7 @@ class Users extends Controller
     public function reset_password($userid = '')
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Decrypted user id
         $user_id = $this->security->decrypt_id($userid);
@@ -160,7 +163,7 @@ class Users extends Controller
     public function create_user()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Check if form was submitted and if access is allowed
         if($this->app->deny_action('add') && $this->input->post('submit'))
@@ -266,7 +269,7 @@ class Users extends Controller
     public function update_user($userid = '')
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Check if form was submitted and if access is allowed
         if($this->app->deny_action('edit') && $this->input->post('submit'))
@@ -345,7 +348,7 @@ class Users extends Controller
     public function update_password($userid = '')
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Check if form was submitted and if access is allowed
         if($this->app->deny_action('edit') && $this->input->post('submit'))
@@ -398,7 +401,7 @@ class Users extends Controller
     public function display_users()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Load library
         $this->load->library('datatables');
@@ -461,7 +464,7 @@ class Users extends Controller
     public function delete_user($userid = '')
     {
         // Check for an active session else redirect
-        $this->app->check_active_session();
+        $this->app->check_active_session([1]);
 
         // Check if user has access to this action
         if($this->app->deny_action('delete'))
