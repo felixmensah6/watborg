@@ -18,7 +18,7 @@ class Settings extends Controller
     {
         $menu = [
             [
-                'text' => 'System Setup',
+                'text' => 'System',
                 'url' => 'settings',
                 'active' => null,
                 'class' => null,
@@ -27,7 +27,7 @@ class Settings extends Controller
                 'roles' => [1]
             ],
             [
-                'text' => 'Service Setup',
+                'text' => 'Services',
                 'url' => 'settings/service-setup',
                 'active' => 'service-setup',
                 'class' => null,
@@ -36,9 +36,36 @@ class Settings extends Controller
                 'roles' => [1]
             ],
             [
-                'text' => 'Drug Setup',
+                'text' => 'Drugs',
                 'url' => 'settings/drug-setup',
                 'active' => 'drug-setup',
+                'class' => null,
+                'attributes' => null,
+                'visible' => null,
+                'roles' => [1]
+            ],
+            [
+                'text' => 'Occupations',
+                'url' => 'settings/occupation-setup',
+                'active' => 'occupation-setup',
+                'class' => null,
+                'attributes' => null,
+                'visible' => null,
+                'roles' => [1]
+            ],
+            [
+                'text' => 'Districts',
+                'url' => 'settings/district-setup',
+                'active' => 'district-setup',
+                'class' => null,
+                'attributes' => null,
+                'visible' => null,
+                'roles' => [1]
+            ],
+            [
+                'text' => 'Localities',
+                'url' => 'settings/locality-setup',
+                'active' => 'locality-setup',
                 'class' => null,
                 'attributes' => null,
                 'visible' => null,

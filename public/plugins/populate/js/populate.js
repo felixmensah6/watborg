@@ -243,7 +243,7 @@ jQuery.fn.populate = function(obj, options) {
 					for(var i in arr)
 					{
 						method(this, i, arr[i]);
-						console.log(arr[i]);
+						//console.log(arr[i]);
 
 						// Select2 custom select plugin fix
 						iTrim = i.replace('[]','');
@@ -251,6 +251,9 @@ jQuery.fn.populate = function(obj, options) {
 
 						// Select2 Ajax remote data fix
 						if(typeof $('[name=' + iTrim + ']').attr('data-ajax--url') != 'undefined'){
+
+							// Clear input before appending
+							$('[name=' + iTrim + ']').val(null).trigger("change");
 
 							if($.isArray(arr[i])){
 								for (x = 0, len = arr[i].length/2; x < len; x++) {

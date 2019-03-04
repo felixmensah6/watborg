@@ -169,12 +169,6 @@
 
             <!-- Navbar -->
             <nav class="navbar navbar-expand-md navbar-light">
-                <form class="navbar-search">
-                    <button type="submit">
-                        <i class="icon-search"></i>
-                    </button>
-                    <input type="search" name="search" placeholder="Type in to Search..." autocomplete="off">
-                </form>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-user dropdown-toggle caret-none" href="#" data-toggle="dropdown">

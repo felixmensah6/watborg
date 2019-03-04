@@ -144,7 +144,7 @@ class Login extends Controller
     {
         // Check for an active session else redirect
         $this->app->check_active_session();
-        
+
         // Check if form was submitted
         if($this->input->post('submit'))
         {
@@ -172,7 +172,7 @@ class Login extends Controller
             $this->session->set(['temp_password' => 0]);
 
             // Redirect on successful login
-            show_http_response(404, $this->app->alert('success', sprintf($this->app_lang->password_change . js_redirect(site_url(), 3), 3), true));
+            show_http_response(404, $this->app->alert('success', sprintf($this->app_lang->password_change . js_redirect(site_url(), 2), 3), true));
         }
     }
 

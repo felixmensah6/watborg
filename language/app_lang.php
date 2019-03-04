@@ -17,6 +17,7 @@ $lang['required'] = '%s is required';
 $lang['invalid'] = '%s is invalid';
 $lang['short_name'] = '%s is too short';
 $lang['valid_name'] = '%s should contain only alphabets, spaces and hyphen (-)';
+$lang['valid_number'] = '%s should contain only numbers';
 $lang['short_username_password'] = 'Your %s should not be less than %d characters';
 $lang['valid_username'] = 'Your %s should contain only letters and numbers with no spaces';
 $lang['name_exists'] = 'Your %s already exists and cannot be used';
@@ -33,7 +34,8 @@ $lang['delete_own_account'] = 'You cannot delete your own account';
 $lang['invalid_login'] = 'Invalid username or password';
 $lang['account_locked'] = 'Access denied! Your account is locked';
 $lang['login_attempts'] = 'Invalid password. You have %s attempts left';
-$lang['set_password_info'] = 'Please set a new password for your account.';
+$lang['set_password_info'] = 'Please set a new password for your account';
 
 // Records Language
 $lang['add_patient_success'] = 'New patient successfully registered';
+$lang['rejected_hosp_number'] = 'You can only reregister old hospital numbers';

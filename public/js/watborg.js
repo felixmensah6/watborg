@@ -45,14 +45,33 @@ function submitForm(form, add = true, reload = false){
 		});
 
 	// Prevent default action
-	event.preventDefault();
+	return false;
 }
 
 /**
- * Form Submit Function
+ * Reset Form Function
  * --------------------------------------------
  */
-function submitFormAdvance(form, add = true, reload = false, alert = false){
+function resetForm(form, callback = null){
+
+    // Variables
+	var select2 = $("[data-clear]");
+
+    // Reset
+    $(form)[0].reset();
+    $(select2).val(null).trigger("change");
+
+    // Check if it is a function then call
+    if(typeof callback == 'function'){
+        callback();
+    }
+}
+
+/**
+ * Register Patient Function
+ * --------------------------------------------
+ */
+function registerPatient(form, add = true, reload = false, alert = false){
 
 	// Variables
 	var url = $(form).attr("action"),
@@ -69,7 +88,7 @@ function submitFormAdvance(form, add = true, reload = false, alert = false){
 		.done(function (data) {
             // Show success message
             if(alert === true){
-                $.alertable.alert(data, {html: true, closeButton: true, okButton: ''});
+                bootbox.alert(data);
             }else{
                 target.html(data);
             }
@@ -79,6 +98,8 @@ function submitFormAdvance(form, add = true, reload = false, alert = false){
 				$(form)[0].reset();
 				$(select2).val(null).trigger("change");
                 $(".selected-service").remove();
+                $("#age").text('0');
+                updateTotal();
 			}
 
             // Reload datatable if true
@@ -99,33 +120,55 @@ function submitFormAdvance(form, add = true, reload = false, alert = false){
 		});
 
 	// Prevent default action
-	event.preventDefault();
+	return false;
 }
 
 /**
- * Search and Populate Form with Patient Details
+ * Search and Fill Form with Patient Details
  * --------------------------------------------
  */
-function getPatient(button, url, inputID){
+function searchPatient(button, url, inputID){
 
 	// Variables
-	var inputData = $(inputID).val()
+	var search = $(inputID).val(),
+        form = $('#register-patient'),
+        json = null,
         $this = $(button);
 
-	// Show loader
-	$this.addClass("loading loading-inverse disabled");
+    // Check for a value before searching
+    if(search != '' && search.length >= 4) {
 
-	// Submit data
-	$.post(url, inputData)
-		.done(function (data) {
-            //
-		})
-		.fail(function (jqXHR, textStatus, errorThrown) {
-            //
-		})
-		.always(function (data) {
-			//$this.removeClass("loading");
-		});
+    	// Show loader
+    	$this.addClass("loading loading-inverse disabled");
+
+    	// Submit data
+    	$.post(url, {query: search})
+    		.done(function (data) {
+                json = JSON.parse(data);
+                form.populate(json);
+                $("#age").text(json['age']);
+    		})
+    		.fail(function (jqXHR, textStatus, errorThrown) {
+                // Show alert
+                bootbox.confirm({
+                    message: jqXHR.responseText,
+                    buttons: {
+                        confirm: {
+                            label: 'Yes'
+                        }
+                    },
+                    callback: function (result) {
+                        // Clear input if cancel is clicked
+                        if(result == false) {
+                            $(inputID).val('');
+                        }
+                    }
+                });
+    		})
+    		.always(function (data) {
+    			$this.removeClass("loading loading-inverse disabled");
+    		});
+    }
 
 	// Prevent default action
 	event.preventDefault();

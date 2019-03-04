@@ -18,7 +18,7 @@
     <script src="<?= asset('js/jquery.min.js'); ?>"></script>
 </head>
 
-<body>
+<body class="bg-image">
     <!-- Wrapper -->
     <div class="wrapper">
 
@@ -29,9 +29,10 @@
                 <!-- Panel -->
                 <div class="panel panel-default bordered">
                     <div class="panel-heading">
-                        <div class="panel-title login-box-header">
+                        <div class="panel-title login-box-header py-3">
+                            <img src="<?= asset('images/watborg2.svg'); ?>" width="32" height="32">
                             <h4><?= env('APP_OWNER'); ?></h4>
-                            <p class="text-muted mb-0">Create a new password for your Account.</p>
+                            <p class="text-muted mb-0">Create a new password for your account.</p>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -44,7 +45,7 @@
                                 <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Confirm Password" autocomplete="off" tabindex="1">
                             </div>
                             <input type="hidden" name="submit" value="submit">
-                            <button type="submit" onclick="submitForm(this.form, true);" class="btn btn-primary btn-block mb-3" tabindex="1">Save Password</button>
+                            <button type="submit" onclick="submitForm(this.form, true); return false;" class="btn btn-primary btn-block mb-3" tabindex="1">Save Password</button>
                             <div class="login-box-footer">
                                 Don't want to change password?
                                 <a href="<?= site_url("logout"); ?>">Logout.</a>
@@ -53,7 +54,7 @@
                     </div>
                 </div>
 
-                <div class="login-box-footer">
+                <div class="login-box-footer text-muted">
                     Copyright © <?= env('APP_DEVELOPER'); ?>
                 </div>
 

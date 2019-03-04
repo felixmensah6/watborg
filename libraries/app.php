@@ -390,7 +390,7 @@ class App
 	 * Deny Action
 	 * --------------------------------------------
      *
-     * @return string $key The privileges array key
+     * @param string $key The privileges array key
      * @return void
 	 */
     public function deny_action($key)
@@ -410,6 +410,59 @@ class App
         else
         {
             return true;
+        }
+    }
+
+    /**
+	 * Assign Hospital Number
+     * --------------------------------------------
+	 *
+	 * @param string $action The action to be perfomed
+     * @return mixed
+	 */
+    public function hospital_number($action = null)
+    {
+        // Variables
+        $db = new Database;
+        $row = function($row_id) use ($db)
+        {
+            $query = $db->columns('value')
+                        ->from('system_settings')
+                        ->where('id = ?')
+                        ->select([$row_id]);
+            return $query['value'];
+        };
+        $number = $row('next_hospital_number');
+        $year = $row('hospital_number_year');
+        $current_year = date('Y');
+
+        // Update next number and year if system year changes
+        if($current_year != $year && $current_year > $year)
+        {
+            $db->table('system_settings')
+               ->set(['value' => '?'])
+               ->where('id = ?')
+               ->update_all([
+                   [$current_year, 'hospital_number_year'],
+                   ['1', 'next_hospital_number']
+               ]);
+        }
+
+        switch ($action)
+        {
+            case 'INCREMENT':
+                $db->table('system_settings')
+                    ->set(['value' => 'value + 1'])
+                    ->where('id = ?')
+                    ->update(['next_hospital_number']);
+                break;
+
+            default:
+                $updated_number = $row('next_hospital_number');
+                $updated_year = $row('hospital_number_year');
+                $updated_year = '01-01-' . $updated_year;
+                return $updated_number . '/' . date('y', strtotime($updated_year));
+                break;
         }
     }
 }

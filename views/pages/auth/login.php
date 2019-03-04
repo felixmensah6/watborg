@@ -18,7 +18,7 @@
     <script src="<?= asset('js/jquery.min.js'); ?>"></script>
 </head>
 
-<body>
+<body class="bg-image">
     <!-- Wrapper -->
     <div class="wrapper">
 
@@ -27,9 +27,10 @@
             <div class="col-sm-6 col-md-5 col-lg-4 login-box-content">
 
                 <!-- Panel -->
-                <div class="panel panel-default bordered">
+                <div class="panel panel-default panel-light bordered">
                     <div class="panel-heading">
-                        <div class="panel-title login-box-header">
+                        <div class="panel-title login-box-header py-3">
+                            <img src="<?= asset('images/watborg2.svg'); ?>" width="32" height="32">
                             <h4><?= env('APP_OWNER'); ?></h4>
                             <p class="text-muted mb-0">Please Log In below to get Started.</p>
                         </div>
@@ -50,12 +51,12 @@
                                 </div>
                             </div>
                             <input type="hidden" name="submit" value="submit">
-                            <button type="submit" onclick="submitForm(this.form);" class="btn btn-primary btn-block mb-2" tabindex="1">Log In</button>
+                            <button type="submit" onclick="submitForm(this.form); return false;" class="btn btn-primary btn-block mb-2" tabindex="1">Log In</button>
                         </form>
                     </div>
                 </div>
 
-                <div class="login-box-footer">
+                <div class="login-box-footer text-muted">
                     Copyright © <?= env('APP_DEVELOPER'); ?>
                 </div>
 
