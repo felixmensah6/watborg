@@ -14,9 +14,9 @@
 <div class="content boxed">
 
     <!-- Jumbotron -->
-    <div class="jumbotron">
-        <h1 class="display-5">Hello, <?= $this->app->user_info('title') . ' ' . ucwords($this->app->user_info('lastname')); ?></h1>
-        <p class="text-muted">We will display basic summaries, recent transactions, notifications, shortcuts etc. on your dashboard.</p>
+    <div class="jumbotron p-4">
+        <h1 class="display-6">Hello, <?= $this->app->user_info('title') . ' ' . ucwords($this->app->user_info('lastname')); ?></h1>
+        <p class="text-muted mb-0">We will display basic summaries, recent transactions, notifications, shortcuts etc. on your dashboard.</p>
     </div>
 
     <!-- Row -->
@@ -59,6 +59,55 @@
                     15
                     <small class="description text-muted">Items in trash</small>
                 </span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Row -->
+    <div class="row">
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="panel panel-default shortcut">
+                <a href="<?= site_url('records/patient-records'); ?>" class="link">
+                    <span class="shortcut-icon">
+                        <img src="images/records.svg" alt="Records">
+                    </span>
+                    <span class="value">Patient Records</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="panel panel-default shortcut">
+                <a href="<?= site_url('users'); ?>" class="link">
+                    <span class="shortcut-icon">
+                        <img src="images/users.svg" alt="Users">
+                    </span>
+                    <span class="value">Manage Users</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="panel panel-default shortcut">
+                <a href="#" class="link">
+                    <span class="shortcut-icon">
+                        <img src="images/payment.svg" alt="Payment">
+                    </span>
+                    <span class="value">Make Payment</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="panel panel-default shortcut">
+                <a href="<?= site_url('settings'); ?>" class="link">
+                    <span class="shortcut-icon">
+                        <img src="images/cogs.svg" alt="Trash">
+                    </span>
+                    <span class="value">System Settings</span>
+                </a>
             </div>
         </div>
 
