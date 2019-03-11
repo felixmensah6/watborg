@@ -89,6 +89,7 @@
                 </div>
                 <input type="hidden" name="submit" value="submit">
                 <button onclick="submitForm(this.form);" type="button" class="btn btn-primary" tabindex="1">Submit</button>
+                <button onclick="resetForm(this.form);" type="button" class="btn btn-default" tabindex="1">Clear</button>
             </form>
         </div>
     </div>

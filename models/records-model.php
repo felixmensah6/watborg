@@ -59,6 +59,27 @@ class Records_Model extends Model
           return $this->db->last_Insert_Id();
      }
 
+     /**
+      * Update Last Attendance
+      * --------------------------------------------
+      *
+      * @param string $date The attendance date
+      * @param string $datetime The date and time record was updated
+      * @param string $id The patient id
+      * @return void
+      */
+     public function update_last_attendance($date, $datetime, $id)
+     {
+         $this->db
+              ->table('patients')
+              ->set([
+                  'last_attendance' => '?',
+                  'updated_at' => '?'
+              ])
+              ->where('patient_id = ?')
+              ->update([$date, $datetime, $id]);
+     }
+
     /**
  	  * Create Attendance
  	  * --------------------------------------------
@@ -69,7 +90,7 @@ class Records_Model extends Model
      {
          $values = func_get_args();
          $this->db
-              ->table('patient_attendance')
+              ->table('attendance')
               ->columns([
                   'attendance_date',
                   'patient_id',
@@ -97,30 +118,61 @@ class Records_Model extends Model
      }
 
      /**
-  	  * Create Service Bills
+  	  * Create Bills
   	  * --------------------------------------------
        *
        * @return void
   	  */
-      public function insert_service_bills()
+      public function insert_bills()
       {
           $values = func_get_args();
           $this->db
-               ->table('service_bills')
+               ->table('bills')
                ->columns([
                    'bill_type',
                    'bill_description',
                    'bill_date',
+                   'hospital_number',
                    'patient_id',
                    'patient_name',
+                   'patient_phone',
+                   'patient_locality',
                    'patient_type',
                    'attendance_id',
+                   'reference_type',
                    'reference_number',
                    'debit',
                    'credit',
                    'created_by',
                    'created_at',
                    'updated_at'
+               ], true)
+               ->insert($values);
+      }
+
+     /**
+  	  * Create Bill Summaries
+  	  * --------------------------------------------
+       *
+       * @return void
+  	  */
+      public function insert_bill_summaries()
+      {
+          $values = func_get_args();
+          $this->db
+               ->table('bill_summaries')
+               ->columns([
+                   'bill_summary_date',
+                   'hospital_number',
+                   'patient_id',
+                   'patient_name',
+                   'patient_phone',
+                   'patient_locality',
+                   'patient_type',
+                   'attendance_id',
+                   'reference_number',
+                   'debit',
+                   'credit'
                ], true)
                ->insert($values);
       }

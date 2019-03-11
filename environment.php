@@ -168,3 +168,10 @@ switch (env('APP_ENV'))
         ini_set('log_errors', true);
         break;
 }
+
+// Include error handler in development mode
+if(env('APP_ENV') == 'development')
+{
+    require_once 'app/error-handler.php';
+    set_error_handler(["Error_Handler", "error"]);
+}

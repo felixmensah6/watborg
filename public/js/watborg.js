@@ -65,6 +65,9 @@ function resetForm(form, callback = null){
     if(typeof callback == 'function'){
         callback();
     }
+
+    // Prevent default action
+	return false;
 }
 
 /**

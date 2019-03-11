@@ -38,4 +38,4 @@ $lang['set_password_info'] = 'Please set a new password for your account';
 
 // Records Language
 $lang['add_patient_success'] = 'New patient successfully registered';
-$lang['rejected_hosp_number'] = 'You can only reregister old hospital numbers';
+$lang['rejected_hosp_number'] = 'You can only re-register old hospital numbers';

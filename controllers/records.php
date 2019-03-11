@@ -255,6 +255,7 @@ class Records extends Controller
             $auto_hosp_number = $this->app->hospital_number();
             $reference = $this->security->generate_unique_int(15);
             $patient_name = ucwords($firstname . ' ' . $lastname);
+            $total_cost = 0;
 
             // Ensure that future hospital numbers are not used
             if($hospital_number != null)
@@ -282,6 +283,9 @@ class Records extends Controller
                 // Insert new attendance
                 $attendance_id = $this->records_model->insert_attendance($date, $patient_id, $current_user, $datetime, $datetime);
 
+                // Update patient last attendance date
+                $this->records_model->update_last_attendance($date, $datetime, $patient_id);
+
                 // Insert service bills
                 foreach ($service as $value)
                 {
@@ -289,8 +293,14 @@ class Records extends Controller
                     $row = $this->settings_model->service_info($value);
 
                     // Insert bills
-                    $this->records_model->insert_service_bills('Bill', $row['service_name'], $date, $patient_id, $patient_name, 'Patient', $attendance_id, $reference, $row['service_cost'], '0', $current_user, $datetime, $datetime);
+                    $this->records_model->insert_bills('Service', $row['service_name'], $date, $auto_hosp_number, $patient_id, $patient_name, $phone, $locality, 'Patient', $attendance_id, 'Bill', $reference, $row['service_cost'], '0', $current_user, $datetime, $datetime);
+
+                    // Add the service cost
+                    $total_cost += $row['service_cost'];
                 }
+
+                // Insert bill summaries
+                $this->records_model->insert_bill_summaries($date, $auto_hosp_number, $patient_id, $patient_name, $phone, $locality, 'Patient', $attendance_id, $reference, $total_cost, '0');
 
                 // Show alert message
                 echo '<h6 class="text-success mb-3">Registration was successful!</h6>';
@@ -316,8 +326,14 @@ class Records extends Controller
                     $row = $this->settings_model->service_info($value);
 
                     // Insert bills
-                    $this->records_model->insert_service_bills('Bill', $row['service_name'], $date, $patient_id, $patient_name, 'Patient', $attendance_id, $reference, $row['service_cost'], '0', $current_user, $datetime, $datetime);
+                    $this->records_model->insert_bills('Service', $row['service_name'], $date, $auto_hosp_number, $patient_id, $patient_name, $phone, $locality, 'Patient', $attendance_id, 'Bill', $reference, $row['service_cost'], '0', $current_user, $datetime, $datetime);
+
+                    // Add the service cost
+                    $total_cost += $row['service_cost'];
                 }
+
+                // Insert bill summaries
+                $this->records_model->insert_bill_summaries($date, $auto_hosp_number, $patient_id, $patient_name, $phone, $locality, 'Patient', $attendance_id, $reference, $total_cost, '0');
 
                 // Show alert message
                 echo '<h6 class="text-success mb-3">Registration was successful!</h6>' .
@@ -336,5 +352,58 @@ class Records extends Controller
             // Show alert message
             echo $this->app->alert('danger', $this->app_lang->action_denied);
         }
+    }
+
+    /**
+	 * Load Patients into Table
+	 * --------------------------------------------
+     *
+     * @return void
+	 */
+    public function display_patients()
+    {
+        // Check for an active session else redirect
+        $this->app->check_active_session([1, 6]);
+
+        // Load library
+        $this->load->library('datatables');
+
+        $columns = [
+            'patient_id' => function($value, $row, $num)
+            {
+                return $num++;
+            },
+            'hospital_number' => null,
+            'firstname' => function($value)
+            {
+                return ucwords($value);
+            },
+            'lastname' => function($value)
+            {
+                return ucwords($value);
+            },
+            'gender' => null,
+            'birthday' => function($value)
+            {
+                return get_age($value);
+            },
+            'phone' => null,
+            'updated_at' => function($value)
+            {
+                return timeago($value);
+            },
+            null => function($value)
+            {
+                $actions = '<a href="' . site_url('records/patient-profile/') . $this->security->encrypt_id($value['patient_id']) . '" class="btn btn-default btn-xs">Details</a> ';
+
+                $actions .= '<a href="' . site_url('records/edit-patient/') . $this->security->encrypt_id($value['patient_id']) . '" class="btn btn-default btn-xs">Edit</a> ';
+
+                $actions .= '<button data-target="'. site_url('records/delete-patient/') . $this->security->encrypt_id($value["patient_id"]) .'" data-type="'.ucwords($value["firstname"].' '.$value["lastname"]).'" class="delete-record btn btn-default btn-xs">Delete</button>';
+
+                return $actions;
+            }
+        ];
+
+        $this->datatables->render('patients', $columns);
     }
 }

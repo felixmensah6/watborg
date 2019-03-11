@@ -169,6 +169,11 @@
 
             <!-- Navbar -->
             <nav class="navbar navbar-expand-md navbar-light">
+                <a class="navbar-brand d-inline-block d-md-none w-auto" href="<?= site_url(); ?>">
+                    <img src="<?= asset('images/watborg2.svg'); ?>" width="22" height="22" class="align-middle" alt="">
+                    <span class="text-dark d-none d-sm-inline-block"><?= env('APP_OWNER'); ?></span>
+                </a>
+                <!-- <img src="" width="28" height="28" class="d-inline-block d-md-none align-top" alt=""> -->
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-user dropdown-toggle caret-none" href="#" data-toggle="dropdown">
@@ -181,11 +186,6 @@
                             </span>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="users-profile.html">Profile</a>
-                            <a class="dropdown-item d-flex align-items-center" href="widgets-inbox.html">
-                                Inbox
-                                <span class="badge badge-danger ml-auto">12</span>
-                            </a>
-                            <a class="dropdown-item" href="#">Notifications</a>
                             <a class="dropdown-item" href="#">Help/Support</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="<?= site_url('logout'); ?>">Logout</a>

@@ -23,7 +23,7 @@
                     <div class="form-group col-md-4">
                         <label class="label-required">Hospital Number</label>
                         <div class="input-group">
-                            <input type="text" name="hospital_number" id="patient_search" class="form-control" placeholder="Auto" tabindex="1">
+                            <input type="text" name="hospital_number" id="patient_search" class="form-control" placeholder="Guest" tabindex="1">
                             <div class="input-group-append">
                                 <button onclick="searchPatient(this, '<?= site_url("records/search-patient"); ?>', '#patient_search');" class="btn btn-secondary" type="button">Search</button>
                             </div>
@@ -34,86 +34,27 @@
                     <legend>Patient Information</legend>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label class="label-required">Surname</label>
-                            <input type="text" name="lastname" class="form-control" placeholder="e.g. Adongo" tabindex="1">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="label-required">Other Names</label>
-                            <input type="text" name="firstname" class="form-control" placeholder="e.g. John" tabindex="1">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label class="label-required d-block">Gender</label>
-                            <label class="radio-inline radio-styled mt-2 mr-3">
-                                <input type="radio" name="gender" value="Male"> Male
-                                <span class="tick"></span>
-                            </label>
-                            <label class="radio-inline radio-styled mt-2 mr-3">
-                                <input type="radio" name="gender" value="Female"> Female
-                                <span class="tick"></span>
-                            </label>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label class="label-required">Marrital Status</label>
-                            <?= select($this->app->marrital_status(), 'marrital_status', null, ' ', 'form-control select2', ' tabindex="1" data-placeholder="Select Marrital Status" data-minimum-results-for-search="Infinity" data-width="100%" data-change="true" data-clear'); ?>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="label-required">Date of Birth</label>
-                            <div class="input-group datetimepicker">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Age: <span class="ml-1" id="age">0</span></span>
-                                </div>
-                                <input type="text" class="form-control" name="birthday" id="birthday" placeholder="dd/mm/yyyy" data-date-format="DD/MM/YYYY" tabindex="1">
-                                <div class="input-group-append">
-                                    <button class="btn btn-default" type="button"><i class="icon-calendar-alt"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label class="label-required">Occupation</label>
-                            <select class="form-control select2" name="occupation" data-ajax--url="<?= site_url("data/occupations"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Occupation" data-minimum-input-length="2" data-width="100%" tabindex="1" data-clear></select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="label-required">Religion</label>
-                            <?= select($this->app->religion(), 'religion', null, ' ', 'form-control select2', ' tabindex="1" data-placeholder="Select Religion" data-minimum-results-for-search="Infinity" data-width="100%" data-change="true" data-clear'); ?>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label class="label-required">Home Address</label>
-                            <input type="text" name="address" class="form-control" placeholder="e.g. Akwele, Kasoa" tabindex="1">
+                            <label class="label-required">Patient Name</label>
+                            <input type="text" name="patient_name" class="form-control" placeholder="e.g. John Adongo" tabindex="1">
                         </div>
                         <div class="form-group col-md-6">
                             <label class="label-required">Phone No.</label>
-                            <input type="phone" name="phone" class="form-control" placeholder="e.g. 024xxxxxxx" tabindex="1">
+                            <input type="text" name="patient_phone" class="form-control" placeholder="e.g. 024xxxxxxx" tabindex="1">
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label>District</label>
-                            <select class="form-control select2" name="district" data-ajax--url="<?= site_url("data/districts"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select District" data-minimum-input-length="2" data-width="100%" tabindex="1" data-clear></select>
-                        </div>
                         <div class="form-group col-md-6">
                             <label class="label-required">Locality</label>
-                            <select class="form-control select2" name="locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-minimum-input-length="2" data-width="100%" data-name="locality" tabindex="1" data-clear></select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label class="label-required">Next of Kin Name</label>
-                            <input type="text" name="relative_name" class="form-control" id="relative_name" placeholder="e.g. John Adongo" tabindex="1">
+                            <select class="form-control select2" name="patient_locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-minimum-input-length="2" data-width="100%" data-name="locality" tabindex="1" data-clear></select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="label-required">Next of Kin Phone No.</label>
-                            <input type="phone" name="relative_phone" class="form-control" id="relative_phone" placeholder="e.g. 024xxxxxxx" tabindex="1">
+                            <label>Reference Number</label>
+                            <input type="text" class="form-control" placeholder="Auto" readonly tabindex="1">
                         </div>
                     </div>
                 </fieldset>
                 <fieldset class="mt-3 mb-3">
-                    <legend>Service Charges</legend>
+                    <legend>Bills/Service Charges</legend>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="label-required">Services</label>
