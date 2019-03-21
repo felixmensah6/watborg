@@ -17,7 +17,7 @@ class Cashier extends Controller
     public function index()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session([1, 5]);
+        $this->app->check_active_session(1);
 
         // View data
         $data['title'] = 'Pending Bills';
@@ -37,7 +37,7 @@ class Cashier extends Controller
     public function billing()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session([1, 5]);
+        $this->app->check_active_session(2);
 
         // View data
         $data['title'] = 'Patient Billing';
@@ -58,7 +58,7 @@ class Cashier extends Controller
     public function daily_transactions()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session([1, 5]);
+        $this->app->check_active_session(2);
 
         // View data
         $data['title'] = 'Daily Transactions';
@@ -78,7 +78,7 @@ class Cashier extends Controller
     public function display_pending_bills()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session([1, 6]);
+        $this->app->check_active_session(2);
 
         // Load library
         $this->load->library('datatables');

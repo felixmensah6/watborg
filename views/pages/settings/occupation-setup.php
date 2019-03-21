@@ -16,7 +16,7 @@
 
     <!-- Heading -->
     <div class="page-heading">
-        <button type="button" class="btn btn-primary btn-sm load-modal" data-url="<?= site_url('settings/add-occupation/'); ?>" data-title="Add New Occupation" data-toggle="modal" data-target="#page-modal" data-backdrop="static">
+        <button type="button" class="btn btn-primary btn-sm float-right load-modal" data-url="<?= site_url('settings/add-occupation/'); ?>" data-title="Add New Occupation" data-toggle="modal" data-target="#page-modal" data-backdrop="static">
             <i class="icon-plus mr-1"></i> Add Occupation
         </button>
     </div>

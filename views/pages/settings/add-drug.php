@@ -2,22 +2,18 @@
 <div class="panel mb-0">
     <div class="panel-body p-0">
         <div class="status"></div>
-        <form action="<?= site_url("settings/create-service"); ?>" method="post">
+        <form action="<?= site_url("settings/create-drug"); ?>" method="post">
             <div class="form-group">
-                <label class="label-required">Service Name</label>
-                <input type="text" name="service_name" class="form-control" placeholder="e.g. Consultation" tabindex="1">
+                <label class="label-required">Drug Name</label>
+                <input type="text" name="drug_name" class="form-control" placeholder="e.g. Tobrex" tabindex="1">
             </div>
             <div class="form-group">
-                <label class="label-required">Service Category</label>
-                <?= select($this->app->service_categories(), 'service_category', null, ' ', 'form-control select2', 'tabindex="1" data-placeholder="Select Category" data-minimum-results-for-search="Infinity" data-width="100%" data-clear'); ?>
-            </div>
-            <div class="form-group">
-                <label class="label-required">Service Cost</label>
+                <label class="label-required">Drug Cost</label>
                 <div class="input-group spinner" data-trigger="spinner">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><?= $currency; ?></span>
                     </div>
-                    <input type="text" class="form-control" name="service_cost" value="0.00" data-rule="currency" data-step="1.00" tabindex="1">
+                    <input type="text" class="form-control" name="drug_cost" value="0.00" data-rule="currency" data-step="1.00" tabindex="1">
                     <span class="input-group-append">
                         <button type="button" class="btn btn-default spin-up" data-spin="up"><i class="icon-chevron-up"></i></button>
                         <button type="button" class="btn btn-default spin-down" data-spin="down"><i class="icon-chevron-down"></i></button>
@@ -32,11 +28,4 @@
 </div>
 
 <!-- Javascript -->
-<script src="<?= asset('plugins/select2/js/select2.min.js'); ?>"></script>
 <script src="<?= asset('js/unity.core.min.js'); ?>"></script>
-<script type="text/javascript">
-
-    // Select 2
-    $('.select2').select2();
-
-</script>

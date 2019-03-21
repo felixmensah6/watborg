@@ -29,19 +29,36 @@ class App
      * Check for Active Session
      * --------------------------------------------
      *
-     * @param array $roles An array of role levels e.g [1, 2, 3]
+     * @param array $layer The URL segment to use for matching
      * @return array
      */
-    public function check_active_session($roles = null)
+    public function check_active_session($layer = null)
     {
-        // Check if already logged in and redirect
-        $this->session->check("user_id", site_url("login"), true);
-
-        // Check user role or redirect
-        if($roles != null && !in_array($this->session->role_level, $roles))
+        if($layer == null)
         {
-            // Stop execution and redirect
-            exit(redirect(site_url("access-denied")));
+            // Check if already logged in and redirect
+            $this->session->check("user_id", site_url("login"), true);
+        }
+        else
+        {
+            // Check if already logged in and redirect
+            $this->session->check("user_id", site_url("login"), true);
+
+            // Page to match
+            $page = $this->uri->segment($layer);
+
+            // Fetch result from db
+            $result = $this->db->columns('page_roles')->from('page_controls')->where('page_slug = ?')->select([$page]);
+
+            // Build array from page roles
+            $roles = explode(',', $result['page_roles']);
+
+            // Check if user has access and redirect
+            if(!in_array($this->session->role_level, $roles))
+            {
+                // Stop execution and redirect
+                exit(redirect(site_url("access-denied")));
+            }
         }
     }
 

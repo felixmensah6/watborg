@@ -17,7 +17,7 @@ class Records extends Controller
     public function index()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session([1, 6]);
+        $this->app->check_active_session(1);
 
         // View data
         $data['title'] = 'Register Patient';
@@ -37,7 +37,7 @@ class Records extends Controller
     public function patient_records()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session([1, 6]);
+        $this->app->check_active_session(2);
 
         // View data
         $data['title'] = 'Patient Records';
@@ -57,7 +57,7 @@ class Records extends Controller
     public function search_patient()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session([1, 6]);
+        $this->app->check_active_session(2);
 
         // Load model
         $this->load->model('records-model');
@@ -110,7 +110,7 @@ class Records extends Controller
     public function patient_registration()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session([1, 6]);
+        $this->app->check_active_session(2);
 
         // Load model
         $this->load->model('records-model');
@@ -333,7 +333,7 @@ class Records extends Controller
     public function display_patients()
     {
         // Check for an active session else redirect
-        $this->app->check_active_session([1, 6]);
+        $this->app->check_active_session(2);
 
         // Load library
         $this->load->library('datatables');
