@@ -8,7 +8,7 @@
             <i class="icon-question-circle"></i>
         </a>
     </div>
-    <?= $this->app->page_menu($page_menu_list, $this->session->role_level); ?>
+    <?= $this->app->page_menu($this->session->role_level); ?>
 </div>
 
 <!-- Content -->
@@ -45,11 +45,16 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="label-required">Locality</label>
-                            <select class="form-control select2" name="patient_locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-minimum-input-length="2" data-width="100%" data-name="locality" tabindex="1" data-clear></select>
+                            <div class="input-group flex-nowrap">
+                                <select class="form-control select2" name="locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-minimum-input-length="2" data-width="100%" data-name="locality" tabindex="1" data-clear></select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-default" type="button" title="Add New">&#43;</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Reference Number</label>
-                            <input type="text" class="form-control" placeholder="Auto" readonly tabindex="1">
+                            <input type="text" class="form-control" placeholder="Auto" readonly tabindex="-1">
                         </div>
                     </div>
                 </fieldset>
@@ -59,6 +64,13 @@
                         <div class="form-group col-md-6">
                             <label class="label-required">Services</label>
                             <select class="form-control select2-services" data-ajax--url="<?= site_url("data/services"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Service" data-width="100%" tabindex="1" data-clear></select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Total Cost</label>
+                            <h3 class="mb-0">
+                                <span class="opacity-25"><?= $currency; ?></span>
+                                <span id="total-cost">0.00</span>
+                            </h3>
                         </div>
                     </div>
                     <div class="form-group">
@@ -78,13 +90,25 @@
                             </tbody>
                             <tfoot>
                                 <tr class="service-total">
-                                    <td></td>
-                                    <td><b>Total Cost :</b></td>
-                                    <td><b id="total-cost">0.00</b></td>
-                                    <td></td>
+                                    <td colspan="4"></td>
                                 </tr>
                             </tfoot>
                         </table>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="label-required">Amount Paid</label>
+                            <div class="input-group spinner" data-trigger="spinner">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><?= $currency; ?></span>
+                                </div>
+                                <input type="text" class="form-control" name="amount_paid" value="0.00" data-rule="currency" data-step="1.00" tabindex="1">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-default spin-up" data-spin="up"><i class="icon-chevron-up"></i></button>
+                                    <button type="button" class="btn btn-default spin-down" data-spin="down"><i class="icon-chevron-down"></i></button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </fieldset>
                 <input type="hidden" name="submit" value="submit">

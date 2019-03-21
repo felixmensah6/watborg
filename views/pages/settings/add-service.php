@@ -15,7 +15,7 @@
                 <label>Service Cost</label>
                 <div class="input-group spinner" data-trigger="spinner">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">GHS</span>
+                        <span class="input-group-text"><?= $currency; ?></span>
                     </div>
                     <input type="text" class="form-control" name="service_cost" value="0.00" data-rule="currency" data-step="1.00" tabindex="1">
                     <span class="input-group-append">
@@ -26,6 +26,7 @@
             </div>
             <input type="hidden" name="submit" value="submit">
             <button onclick="submitForm(this.form, true, true);" type="button" class="btn btn-primary mt-3" tabindex="1">Submit</button>
+            <button type="button" class="btn btn-default mt-3 float-right" data-dismiss="modal">Close</button>
         </form>
     </div>
 </div>

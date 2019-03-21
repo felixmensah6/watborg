@@ -107,13 +107,14 @@ class Records_Model extends Model
  	  * Patient Exists
  	  * --------------------------------------------
       *
+      * @param string $value The WHERE clause value
       * @return void
  	  */
-     public function patient_exists($id)
+     public function patient_exists($value)
      {
          return $this->db->row_count(
                     'SELECT hospital_number FROM patients WHERE hospital_number = ?',
-                    [$id]
+                    [$value]
                 );
      }
 

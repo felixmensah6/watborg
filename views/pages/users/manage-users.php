@@ -8,7 +8,7 @@
             <i class="icon-question-circle"></i>
         </a>
     </div>
-    <?= $this->app->page_menu($page_menu_list, $this->session->role_level); ?>
+    <?= $this->app->page_menu($this->session->role_level); ?>
 </div>
 
 <!-- Content -->
@@ -23,8 +23,8 @@
                         <tr>
                             <th data-orderable="false">#</th>
                             <th>Title</th>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Username</th>
                             <th>User Role</th>
                             <th>Last Login</th>
@@ -36,8 +36,8 @@
                         <tr>
                             <th>#</th>
                             <th>Title</th>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Username</th>
                             <th>User Role</th>
                             <th>Last Login</th>

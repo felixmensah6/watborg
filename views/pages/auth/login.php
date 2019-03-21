@@ -39,10 +39,16 @@
                         <form method="post" action="<?= site_url("login/authenticate"); ?>">
                             <div class="status"></div>
                             <div class="form-group">
-                                <input type="text" name="username" class="form-control" placeholder="Username" autocomplete="off" tabindex="1">
+                                <div class="form-icon-addon">
+                                    <input type="text" name="username" class="form-control" placeholder="Username" autocomplete="off" tabindex="1">
+                                    <i class="form-icon-only line-icon-user"></i>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" tabindex="1">
+                                <div class="form-icon-addon">
+                                    <input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" tabindex="1">
+                                    <i class="form-icon-only line-icon-lock"></i>
+                                </div>
                             </div>
                             <div class="form-row login-forgot">
                                 <div class="form-group col-6"></div>

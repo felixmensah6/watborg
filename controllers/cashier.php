@@ -9,47 +9,6 @@
 class Cashier extends Controller
 {
     /**
-	 * Page Menu List
-	 * --------------------------------------------
-     *
-     * @return array
-	 */
-    public function page_menu_list()
-    {
-        $menu = [
-            [
-                'text' => 'Pending Bills',
-                'url' => 'cashier',
-                'active' => null,
-                'class' => null,
-                'attributes' => null,
-                'visible' => null,
-                'roles' => [1, 5]
-            ],
-            [
-                'text' => 'Patient Billing',
-                'url' => 'cashier/billing',
-                'active' => 'billing',
-                'class' => null,
-                'attributes' => null,
-                'visible' => null,
-                'roles' => [1, 5]
-            ],
-            [
-                'text' => 'Daily Transactions',
-                'url' => 'cashier/daily-transactions',
-                'active' => 'daily-transactions',
-                'class' => null,
-                'attributes' => null,
-                'visible' => null,
-                'roles' => [1, 5]
-            ]
-        ];
-
-        return $menu;
-    }
-
-    /**
 	 * Index
 	 * --------------------------------------------
      *
@@ -62,7 +21,6 @@ class Cashier extends Controller
 
         // View data
         $data['title'] = 'Pending Bills';
-        $data['page_menu_list'] = $this->page_menu_list();
 
         // Load view
         $this->load->view('templates/header');
@@ -83,7 +41,7 @@ class Cashier extends Controller
 
         // View data
         $data['title'] = 'Patient Billing';
-        $data['page_menu_list'] = $this->page_menu_list();
+        $data['currency'] = $this->app->system('app_currency');
 
         // Load view
         $this->load->view('templates/header');
@@ -104,7 +62,6 @@ class Cashier extends Controller
 
         // View data
         $data['title'] = 'Daily Transactions';
-        $data['page_menu_list'] = $this->page_menu_list();
 
         // Load view
         $this->load->view('templates/header');

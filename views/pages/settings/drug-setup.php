@@ -8,5 +8,5 @@
             <i class="icon-question-circle"></i>
         </a>
     </div>
-    <?= $this->app->page_menu($page_menu_list, $this->session->role_level); ?>
+    <?= $this->app->page_menu($this->session->role_level); ?>
 </div>

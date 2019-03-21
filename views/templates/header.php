@@ -1,6 +1,6 @@
 <?php
     // Redirect and force user to change default password
-    if($this->session->temp_password == 1)
+    if(isset($this->session->temp_password) && $this->session->temp_password == 1)
     {
         redirect(site_url('change-password'));
     }
@@ -48,118 +48,7 @@
             <div class="sidebar-content optiscroll">
 
                 <!-- Sidebar Nav -->
-                <?php
-                    // Menu Array
-                    $menu = [
-                        [
-                            'group' => 'Overview',
-                            'roles' => [1, 2, 3, 4, 5, 6],
-                            'menu' => [
-                                [
-                                    'text' => 'Dashboard',
-                                    'url' => null,
-                                    'class' => null,
-                                    'icon' => 'icon-tachometer',
-                                    'attributes' => null,
-                                    'roles' => [1, 2, 3, 4, 5, 6]
-                                ]
-                            ]
-                        ],
-                        [
-                            'group' => 'OPD',
-                            'roles' => [1, 3, 5, 6],
-                            'menu' => [
-                                [
-                                    'text' => 'Records',
-                                    'url' => 'records',
-                                    'class' => null,
-                                    'icon' => 'icon-address-book',
-                                    'attributes' => null,
-                                    'roles' => [1, 6]
-                                ],
-                                [
-                                    'text' => 'Cashier',
-                                    'url' => 'cashier',
-                                    'class' => null,
-                                    'icon' => 'icon-dollar-sign',
-                                    'attributes' => null,
-                                    'roles' => [1, 5]
-                                ],
-                                [
-                                    'text' => 'Treatment Room',
-                                    'url' => 'treatment',
-                                    'class' => null,
-                                    'icon' => 'icon-thermometer-half',
-                                    'attributes' => null,
-                                    'roles' => [1, 3]
-                                ],
-                                [
-                                    'text' => 'Consulting Room',
-                                    'url' => 'consultation',
-                                    'class' => null,
-                                    'icon' => 'icon-stethoscope',
-                                    'attributes' => null,
-                                    'roles' => [1, 2]
-                                ],
-                                [
-                                    'text' => 'Pharmacy',
-                                    'url' => 'pharmacy',
-                                    'class' => null,
-                                    'icon' => 'icon-mortar-pestle',
-                                    'attributes' => null,
-                                    'roles' => [1, 7]
-                                ],
-                                [
-                                    'text' => 'Optical Display',
-                                    'url' => 'optical-display',
-                                    'class' => null,
-                                    'icon' => 'icon-glasses',
-                                    'attributes' => null,
-                                    'roles' => [1, 7]
-                                ]
-                            ]
-                        ],
-                        [
-                            'group' => 'Administration',
-                            'roles' => [1],
-                            'menu' => [
-                                [
-                                    'text' => 'Pay Slip',
-                                    'url' => 'pay-slip',
-                                    'class' => null,
-                                    'icon' => 'icon-id-badge',
-                                    'attributes' => null,
-                                    'roles' => [1]
-                                ]
-                            ]
-                        ],
-                        [
-                            'group' => 'Management',
-                            'roles' => [1],
-                            'menu' => [
-                                [
-                                    'text' => 'Settings',
-                                    'url' => 'settings',
-                                    'class' => null,
-                                    'icon' => 'icon-cogs',
-                                    'attributes' => null,
-                                    'roles' => [1]
-                                ],
-                                [
-                                    'text' => 'Users',
-                                    'url' => 'users',
-                                    'class' => null,
-                                    'icon' => 'icon-user-cog',
-                                    'attributes' => null,
-                                    'roles' => [1]
-                                ]
-                            ]
-                        ],
-                    ];
-
-                    // Load menu
-                    echo $this->app->sidebar($menu, $this->session->role_level);
-                ?>
+                <?= $this->app->sidebar($this->session->role_level); ?>
             </div>
 
         </div>
@@ -185,7 +74,7 @@
                                 <span class="d-block text-muted"><?= $this->app->user_info('role_name'); ?></span>
                             </span>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="users-profile.html">Profile</a>
+                            <a class="dropdown-item" href="<?= site_url('user-profile'); ?>">My Account</a>
                             <a class="dropdown-item" href="#">Help/Support</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="<?= site_url('logout'); ?>">Logout</a>

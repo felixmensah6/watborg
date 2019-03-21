@@ -39,10 +39,16 @@
                         <form method="post" action="<?= site_url("login/set-password"); ?>">
                             <div class="status"><?= $this->app->alert('warning', $this->app_lang->set_password_info, true); ?></div>
                             <div class="form-group">
-                                <input type="password" name="password" id="password" class="form-control" placeholder="New Password" autocomplete="off" tabindex="1">
+                                <div class="form-icon-addon">
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="New Password" autocomplete="off" tabindex="1">
+                                    <i class="form-icon-only line-icon-lock"></i>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Confirm Password" autocomplete="off" tabindex="1">
+                                <div class="form-icon-addon">
+                                    <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Confirm Password" autocomplete="off" tabindex="1">
+                                    <i class="form-icon-only line-icon-lock"></i>
+                                </div>
                             </div>
                             <input type="hidden" name="submit" value="submit">
                             <button type="submit" onclick="submitForm(this.form, true); return false;" class="btn btn-primary btn-block mb-3" tabindex="1">Save Password</button>

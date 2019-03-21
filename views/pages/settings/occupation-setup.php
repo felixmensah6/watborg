@@ -16,8 +16,8 @@
 
     <!-- Heading -->
     <div class="page-heading">
-        <button type="button" class="btn btn-primary btn-sm load-modal" data-url="<?= site_url('settings/add-service/'); ?>" data-title="Add New Service" data-toggle="modal" data-target="#page-modal" data-backdrop="static">
-            <i class="icon-plus mr-1"></i> Add Service
+        <button type="button" class="btn btn-primary btn-sm load-modal" data-url="<?= site_url('settings/add-occupation/'); ?>" data-title="Add New Occupation" data-toggle="modal" data-target="#page-modal" data-backdrop="static">
+            <i class="icon-plus mr-1"></i> Add Occupation
         </button>
     </div>
 
@@ -25,22 +25,18 @@
     <div class="panel panel-default bordered">
         <div class="panel-body" id="table-loader">
             <div class="table-responsive">
-                <table id="records" class="table table-striped table-hover" width="100%" data-ajax="<?= site_url('settings/display-services/'); ?>" data-save-state="true" data-page-length="10" data-targets="[0, -1]" data-order="[[ 1, &quot;asc&quot; ]]">
+                <table id="records" class="table table-striped table-hover" width="100%" data-ajax="<?= site_url('settings/display-occupations/'); ?>" data-save-state="true" data-page-length="10" data-targets="[0, -1]" data-order="[[ 1, &quot;asc&quot; ]]">
                     <thead>
                         <tr>
-                            <th data-orderable="false">#</th>
-                            <th>Service Name</th>
-                            <th>Service Category</th>
-                            <th>Service Cost</th>
-                            <th data-orderable="false">Action</th>
+                            <th width="5%" data-orderable="false">#</th>
+                            <th>Occupation Name</th>
+                            <th width="15%" data-orderable="false">Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>#</th>
-                            <th>Service Name</th>
-                            <th>Service Category</th>
-                            <th>Service Cost</th>
+                            <th>Occupation Name</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>

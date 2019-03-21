@@ -62,7 +62,6 @@ class Settings_Model extends Model
               ->update($values);
      }
 
-
      /**
       * Delete Service
       * --------------------------------------------
@@ -77,4 +76,83 @@ class Settings_Model extends Model
               ->where('service_id = ?')
               ->delete([$service_id]);
      }
+
+     /**
+      * Fetch Occupation Data
+      * --------------------------------------------
+      *
+      * @param string $occupation_id The occupation id
+      * @return array
+      */
+     public function occupation_info($occupation_id)
+     {
+         return $this->db
+                     ->columns('*')
+                     ->from('occupations')
+                     ->where('occupation_id = ?')
+                     ->select([$occupation_id]);
+     }
+
+     /**
+  	  * Occupation Exists
+  	  * --------------------------------------------
+      *
+      * @param string $value The WHERE clause value
+      * @return void
+  	  */
+      public function occupation_exists($value)
+      {
+          return $this->db->row_count(
+                     'SELECT occupation_name FROM occupations WHERE occupation_name = ?',
+                     [$value]
+                 );
+      }
+
+      /**
+   	  * Create Occupation
+   	  * --------------------------------------------
+        *
+        * @return void
+   	  */
+       public function insert_occupation()
+       {
+           $values = func_get_args();
+           $this->db
+                ->table('occupations')
+                ->columns([
+                    'occupation_name'
+                ], true)
+                ->insert($values);
+       }
+
+       /**
+   	   * Update Occupation
+   	   * --------------------------------------------
+         *
+         * @return void
+   	   */
+       public function update_occupation()
+       {
+           $values = func_get_args();
+           $this->db
+                ->table('occupations')
+                ->set(['occupation_name' => '?'])
+                ->where('occupation_id = ?')
+                ->update($values);
+       }
+
+       /**
+        * Delete Occupation
+        * --------------------------------------------
+        *
+        * @param int $occupation_id The occupation id
+        * @return void
+        */
+       public function delete_occupation($occupation_id)
+       {
+           $this->db
+                ->table('occupations')
+                ->where('occupation_id = ?')
+                ->delete([$occupation_id]);
+       }
 }

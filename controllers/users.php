@@ -9,56 +9,6 @@
 class Users extends Controller
 {
     /**
-	 * Page Menu List
-	 * --------------------------------------------
-     *
-     * @return array
-	 */
-    public function page_menu_list()
-    {
-        $menu = [
-            [
-                'text' => 'Manage Users',
-                'url' => 'users',
-                'active' => null,
-                'class' => null,
-                'attributes' => null,
-                'visible' => null,
-                'roles' => [1]
-            ],
-            [
-                'text' => 'Add User',
-                'url' => 'users/add-user',
-                'active' => 'add-user',
-                'class' => null,
-                'attributes' => null,
-                'visible' => null,
-                'roles' => [1]
-            ],
-            [
-                'text' => 'Edit User',
-                'url' => 'users/edit-user/' . $this->uri->segment(3),
-                'active' => 'edit-user',
-                'class' => null,
-                'attributes' => null,
-                'visible' => 'edit-user',
-                'roles' => [1]
-            ],
-            [
-                'text' => 'Reset Password',
-                'url' => 'users/reset-password/' . $this->uri->segment(3),
-                'active' => 'reset-password',
-                'class' => null,
-                'attributes' => null,
-                'visible' => 'reset-password',
-                'roles' => [1]
-            ]
-        ];
-
-        return $menu;
-    }
-
-    /**
 	 * Index
 	 * --------------------------------------------
      *
@@ -71,7 +21,6 @@ class Users extends Controller
 
         // View data
         $data['title'] = 'Manage Users';
-        $data['page_menu_list'] = $this->page_menu_list();
 
         // Load view
         $this->load->view('templates/header');
@@ -92,7 +41,6 @@ class Users extends Controller
 
         // View data
         $data['title'] = 'Add User';
-        $data['page_menu_list'] = $this->page_menu_list();
 
         // Load view
         $this->load->view('templates/header');
@@ -117,7 +65,6 @@ class Users extends Controller
 
         // View data
         $data['title'] = 'Edit User';
-        $data['page_menu_list'] = $this->page_menu_list();
         $data['row'] = $this->user_model->user_info($user_id);
         $data['userid'] = $userid;
 
@@ -144,7 +91,6 @@ class Users extends Controller
 
         // View data
         $data['title'] = 'Reset Password';
-        $data['page_menu_list'] = $this->page_menu_list();
         $data['row'] = $this->user_model->user_info($user_id);
         $data['userid'] = $userid;
 
@@ -447,8 +393,8 @@ class Users extends Controller
             'SELECT {TOTAL_ROWS} U.user_id, U.title, U.firstname, U.lastname, U.username, R.role_name, U.login_date, U.locked
             FROM users U
             INNER JOIN roles R
-            ON U.role_id = R.role_id
-            WHERE {SEARCH_COLUMN}
+            ON U.role_id = R.role_level
+            WHERE {SEARCH_COLUMN} AND role_level <> 1
             ORDER BY {ORDER_COLUMN} {ORDER_DIR} {LIMIT_ROWS}',
             ['U.', 'R.']
         );

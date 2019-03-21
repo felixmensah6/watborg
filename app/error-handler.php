@@ -29,7 +29,7 @@ class Error_Handler
 		$header_title = 'A PHP Error was encountered!';
 		$time = date('Y-m-d h:i:s a',time());
 		$path_length = strlen(__DIR__) - 11;
-		$filename = ucfirst(substr($filename, $path_length));
+		$filename = addslashes(ucfirst(substr($filename, $path_length)));
 		$view_path = '';
 
 		$security = [
@@ -53,7 +53,7 @@ class Error_Handler
 		}
         else
         {
-			die("<div style='position:fixed;width:100%;background-color:#fff;z-index:100000;top:0;left:0;right:0;bottom:0;font-family:\"Times New Roman\", Times, serif !important;font-size:16px;line-height:18px;'><div style='color:#333;padding:15px 20px;margin:10%;border:1px solid #cdcdcd;transform:translate(0%,5%);border-radius:5px;'><h2 style='margin:0 0 5px 0;border-bottom:1px solid #ddd;padding-bottom:15px;font-size:24px;font-weight: 600;'>$header_title</h2><p style='margin:16px 0'><strong>Severity : </strong> $security[$type]</p><p style='margin:16px 0'><strong>Message : </strong> $message</p><p style='margin:16px 0'><strong>Error Code : </strong> $code</p><p style='margin:16px 0'><strong>Line Number : </strong> $line</p><p style='margin:16px 0'><strong>Filename : </strong> $filename</p><p style='border-top:1px solid #ddd;padding-top:15px;margin-bottom:0;font-size:14px'> Error Time : <em>$time</em></p></div></div>");
+			die('<script type="text/javascript">document.write(\'<div style="position:fixed;width:100%;background-color:#fff;z-index:100000;top:0;left:0;right:0;bottom:0;font-family:Times New Roman, Times, serif !important;font-size:16px;line-height:18px;text-align:left;"><div style="color:#333;padding:15px 20px;margin:10%;border:1px solid #cdcdcd;transform:translate(0%,5%);border-radius:5px;"><h2 style="margin:0 0 5px 0;border-bottom:1px solid #ddd;padding-bottom:15px;font-size:24px;font-weight: 600;">'.$header_title.'</h2><p style="margin:16px 0"><strong>Severity : </strong> '.$security[$type].'</p><p style="margin:16px 0"><strong>Message : </strong> '.$message.'</p><p style="margin:16px 0"><strong>Error Code : </strong> '.$code.'</p><p style="margin:16px 0"><strong>Line Number : </strong> '.$line.'</p><p style="margin:16px 0"><strong>Filename : </strong> '.$filename.'</p><p style="border-top:1px solid #ddd;padding-top:15px;margin-bottom:0;font-size:14px"> Error Time : <em>'.$time.'</em></p></div></div>\');</script>');
 		}
 	}
 

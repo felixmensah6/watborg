@@ -8,7 +8,7 @@
             <i class="icon-question-circle"></i>
         </a>
     </div>
-    <?= $this->app->page_menu($page_menu_list, $this->session->role_level); ?>
+    <?= $this->app->page_menu($this->session->role_level); ?>
 </div>
 
 <!-- Content -->
@@ -22,7 +22,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label class="label-required">Hospital Number</label>
-                        <div class="input-group">
+                        <div class="input-group align-items-start">
                             <input type="text" name="hospital_number" id="patient_search" class="form-control" placeholder="Auto" tabindex="1">
                             <div class="input-group-append">
                                 <button onclick="searchPatient(this, '<?= site_url("records/search-patient"); ?>', '#patient_search');" class="btn btn-secondary" type="button">Search</button>
@@ -46,11 +46,11 @@
                         <div class="form-group col-md-3">
                             <label class="label-required d-block">Gender</label>
                             <label class="radio-inline radio-styled mt-2 mr-3">
-                                <input type="radio" name="gender" value="Male"> Male
+                                <input type="radio" name="gender" value="Male" tabindex="1"> Male
                                 <span class="tick"></span>
                             </label>
                             <label class="radio-inline radio-styled mt-2 mr-3">
-                                <input type="radio" name="gender" value="Female"> Female
+                                <input type="radio" name="gender" value="Female" tabindex="1"> Female
                                 <span class="tick"></span>
                             </label>
                         </div>
@@ -74,7 +74,12 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="label-required">Occupation</label>
-                            <select class="form-control select2" name="occupation" data-ajax--url="<?= site_url("data/occupations"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Occupation" data-minimum-input-length="2" data-width="100%" tabindex="1" data-clear></select>
+                            <div class="input-group flex-nowrap">
+                                <select class="form-control select2" name="occupation" data-ajax--url="<?= site_url("data/occupations"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Occupation" data-minimum-input-length="2" data-width="100%" tabindex="1" data-clear></select>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-default load-modal" title="Add New" data-url="<?= site_url('settings/add-occupation/'); ?>" data-title="Add New Occupation" data-toggle="modal" data-target="#page-modal" data-backdrop="static">&#43;</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="label-required">Religion</label>
@@ -94,11 +99,21 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>District</label>
-                            <select class="form-control select2" name="district" data-ajax--url="<?= site_url("data/districts"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select District" data-minimum-input-length="2" data-width="100%" tabindex="1" data-clear></select>
+                            <div class="input-group flex-nowrap">
+                                <select class="form-control select2" name="district" data-ajax--url="<?= site_url("data/districts"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select District" data-minimum-input-length="2" data-width="100%" tabindex="1" data-clear></select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-default" type="button" title="Add New">&#43;</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="label-required">Locality</label>
-                            <select class="form-control select2" name="locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-minimum-input-length="2" data-width="100%" data-name="locality" tabindex="1" data-clear></select>
+                            <div class="input-group flex-nowrap">
+                                <select class="form-control select2" name="locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-minimum-input-length="2" data-width="100%" data-name="locality" tabindex="1" data-clear></select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-default" type="button" title="Add New">&#43;</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">

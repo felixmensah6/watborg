@@ -11,7 +11,7 @@ class Errors extends Controller
     public function index()
     {
         // Load view
-        $this->load->view('pages/404');
+        $this->load->view('pages/errors/404');
     }
 
     /**
@@ -23,6 +23,6 @@ class Errors extends Controller
     public function access_denied()
     {
         // Load view
-        $this->load->view('pages/access-denied');
+        $this->load->view('pages/errors/access-denied');
     }
 }

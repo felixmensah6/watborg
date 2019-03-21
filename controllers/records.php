@@ -9,38 +9,6 @@
 class Records extends Controller
 {
     /**
-	 * Page Menu List
-	 * --------------------------------------------
-     *
-     * @return array
-	 */
-    public function page_menu_list()
-    {
-        $menu = [
-            [
-                'text' => 'Register Patient',
-                'url' => 'records',
-                'active' => null,
-                'class' => null,
-                'attributes' => null,
-                'visible' => null,
-                'roles' => [1, 6]
-            ],
-            [
-                'text' => 'Patient Records',
-                'url' => 'records/patient-records',
-                'active' => 'patient-records',
-                'class' => null,
-                'attributes' => null,
-                'visible' => null,
-                'roles' => [1, 6]
-            ]
-        ];
-
-        return $menu;
-    }
-
-    /**
 	 * Index
 	 * --------------------------------------------
      *
@@ -53,7 +21,6 @@ class Records extends Controller
 
         // View data
         $data['title'] = 'Register Patient';
-        $data['page_menu_list'] = $this->page_menu_list();
 
         // Load view
         $this->load->view('templates/header');
@@ -74,7 +41,6 @@ class Records extends Controller
 
         // View data
         $data['title'] = 'Patient Records';
-        $data['page_menu_list'] = $this->page_menu_list();
 
         // Load view
         $this->load->view('templates/header');
@@ -130,7 +96,7 @@ class Records extends Controller
             }
             else
             {
-                show_http_response(404, 'Patient number '.$query.' was not found. Would you like to register this number?');
+                show_http_response(404, 'Patient number <b>'.$query.'</b> was not found. Would you like to register this number?');
             }
         }
     }
@@ -338,12 +304,16 @@ class Records extends Controller
                 // Show alert message
                 echo '<h6 class="text-success mb-3">Registration was successful!</h6>' .
                      '<dl class="row mb-0">' .
-                     '<dt class="col-sm-3">Patient Name:</dt>' .
-                     '<dd class="col-sm-9">' . ucwords($firstname . ' ' . $lastname) . '</dd>' .
                      '<dt class="col-sm-3">Hosp. Number:</dt>' .
                      '<dd class="col-sm-9">' . $auto_hosp_number . '</dd>' .
+                     '<dt class="col-sm-3">Patient Name:</dt>' .
+                     '<dd class="col-sm-9">' . ucwords($firstname . ' ' . $lastname) . '</dd>' .
                      '<dt class="col-sm-3">Date of Birth:</dt>' .
-                     '<dd class="col-sm-9 mb-0">' . time_format($birthday, 'DD-MM-YYYY') . '</dd>' .
+                     '<dd class="col-sm-9">' . time_format($birthday, 'DD/MM/YYYY') . '</dd>' .
+                     '<dt class="col-sm-3">Address:</dt>' .
+                     '<dd class="col-sm-9">' . $locality . '</dd>' .
+                     '<dt class="col-sm-3">Date:</dt>' .
+                     '<dd class="col-sm-9 mb-0">' . time_format($date, 'DD/MM/YYYY') . '</dd>' .
                      '</dl>';
             }
         }

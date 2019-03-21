@@ -49,54 +49,80 @@ class App
      * Sidebar Menu
      * --------------------------------------------
      *
-     * @param array $list An array of the menu list
      * @param string $role The user role
      * @return string
      */
-    public function sidebar($list, $role)
+    public function sidebar($role)
     {
+        // Fetch menu groups
+        $menu_groups = $this->db->columns('*')->from('menu_groups')->order('menu_group_order')->select_all();
+
         // ul start tag
         $build = '<ul class="sidebar-nav">';
-
-        // Count menu groups
-        $total_groups = count($list);
 
         // Current page
         $active = $this->uri->segment(1);
 
-        // Loop and display menu groups
-        for($i = 0; $i < $total_groups; $i++)
-        {
-            // Menu group ul start tag
-            $build .= '<ul>';
+        // Menu group ul start tag
+        $build .= '<ul>';
 
+        // Loop and display menu groups
+        foreach ($menu_groups as $group)
+        {
             // Check if user has access to this section
-            if(in_array($role, $list[$i]['roles']))
+            if(in_array($role, explode(',', $group['menu_group_roles'])))
             {
                 // Display menu group
-                $build .= '<li class="sidebar-nav-group">' . $list[$i]['group'] . '</li>';
-            }
+                $build .= '<li class="sidebar-nav-group">' . $group['menu_group_name'] . '</li>';
 
-            // Count menus
-            $total_menus = count($list[$i]['menu']);
+                // Fetch menus
+                $menus = $this->db->columns('*')->from('menus')->where('menu_group_id = ?')->order('menu_order')->select_all([$group['menu_group_id']]);
 
-            // Loop and display menus
-            for($x = 0; $x < $total_menus; $x++)
-            {
-                // Add active class to active menu
-                $is_active = ($active == $list[$i]['menu'][$x]['url']) ? 'active ' : '';
-
-                // Check if user has access to this section
-                if(in_array($role, $list[$i]['menu'][$x]['roles']))
+                // Loop and display menus
+                foreach ($menus as $menu)
                 {
-                    // Display menus
-                    $build .= '<li><a href="' . site_url($list[$i]['menu'][$x]['url']) . '" class="' . $is_active . '' . $list[$i]['menu'][$x]['class'] . '" ' . $list[$i]['menu'][$x]['attributes'] . '><i class="' . $list[$i]['menu'][$x]['icon'] . '"></i> ' . $list[$i]['menu'][$x]['text'] . '</a></li>';
+                    // Add active class to active menu
+                    $is_active = ($active == $menu['menu_url']) ? 'active ' : '';
+
+                    // Fetch submenus
+                    $submenus = $this->db->columns('*')->from('submenus')->where('menu_id = ?')->order('submenu_order')->select_all([$menu['menu_id']]);
+
+                    // Check if user has access to this section
+                    if(in_array($role, explode(',', $menu['menu_roles'])))
+                    {
+                        // Check if menu is a parent menu
+                        if($menu['menu_parent'] == 1)
+                        {
+                            // Loop through submenus
+                            foreach ($submenus as $submenu)
+                            {
+                                // Check if user has access to this section
+                                if(in_array($role, explode(',', $submenu['submenu_roles'])))
+                                {
+                                    // Get the first segment of the url for matching
+                                    $active_menu = explode('/', $submenu['submenu_url']);
+
+                                    // Add active class to active menu
+                                    $is_active = ($active == $active_menu[0]) ? 'active ' : '';
+
+                                    // Display menus
+                                    $build .= '<li><a href="' . site_url($submenu['submenu_url']) . '" class="' . $is_active . $menu['menu_class'] . '" ' . $menu['menu_attributes'] . '><i class="' . $menu['menu_icon'] . '"></i> ' . $menu['menu_name'] . '</a></li>';
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Display menus
+                            $build .= '<li><a href="' . site_url($menu['menu_url']) . '" class="' . $is_active . $menu['menu_class'] . '" ' . $menu['menu_attributes'] . '><i class="' . $menu['menu_icon'] . '"></i> ' . $menu['menu_name'] . '</a></li>';
+                        }
+                    }
                 }
             }
-
-            // Menu group ul closing tag
-            $build .= '</ul>';
         }
+
+        // Menu group ul closing tag
+        $build .= '</ul>';
 
         // ul closing tag
         $build .= '</ul>';
@@ -113,34 +139,46 @@ class App
      * @param string $role The user role
      * @return string
      */
-    public function page_menu($list, $role)
+    public function page_menu($role)
     {
-        // Count list array
-        $count = count($list);
+        // Parent page
+        $parent = $this->uri->segment(1);
 
         // Current page
         $current = $this->uri->segment(2);
 
+        // Current page parameter
+        $param = ($this->uri->segment(3) != '') ? '/'.$this->uri->segment(3) : '';
+
         // start tags
         $build = '<div class="nav-scroller" id="page-nav"><nav class="ns-nav"><div class="ns-content">';
 
-        // Loop through menu array
-        for($i = 0; $i < $count; $i++)
-        {
-            // Add active css class
-            $active = ($current == $list[$i]['active']) ? ' active' : null;
+        // Fetch submenus
+        $submenus = $this->db->columns('*')->from('submenus')->select_all();
 
-            // Check if user has access to this section
-            if(in_array($role, $list[$i]['roles']))
+        // Loop through submenus
+        foreach ($submenus as $submenu)
+        {
+            // Get the first segment of the url for matching
+            $submenu_parent = explode('/', $submenu['submenu_url']);
+
+            if($parent == $submenu_parent[0])
             {
-                // Display menu
-                if($list[$i]['visible'] !== null && $list[$i]['visible'] == $current)
+                // Add active css class
+                $active = ($current == $submenu['submenu_active']) ? ' active' : null;
+
+                // Check if user has access to this section
+                if(in_array($role, explode(',', $submenu['submenu_roles'])))
                 {
-                    $build .= '<a href="' . site_url($list[$i]['url']) . '" class="ns-item' . $active . '">' . $list[$i]['text'] . '</a>';
-                }
-                elseif($list[$i]['visible'] == null)
-                {
-                    $build .= '<a href="' . site_url($list[$i]['url']) . '" class="ns-item' . $active . '">' . $list[$i]['text'] . '</a>';
+                    // Display menu
+                    if($submenu['submenu_visible'] != null && $submenu['submenu_visible'] == $current)
+                    {
+                        $build .= '<a href="' . site_url($submenu['submenu_url'] . $param) . '" class="ns-item' . $active . '">' . $submenu['submenu_name'] . '</a>';
+                    }
+                    elseif($submenu['submenu_visible'] == null)
+                    {
+                        $build .= '<a href="' . site_url($submenu['submenu_url']) . '" class="ns-item' . $active . '">' . $submenu['submenu_name'] . '</a>';
+                    }
                 }
             }
         }
@@ -264,6 +302,7 @@ class App
     {
         $roles = $this->db->columns(['role_level', 'role_name'])
                           ->from('roles')
+                          ->where('role_level <> 1')
                           ->select_all(null, PDO::FETCH_KEY_PAIR);
 
         return ($key != null) ? $roles[$key] : $roles;
@@ -276,15 +315,15 @@ class App
      * @param string $key The role number or key
      * @return array
      */
-    public function occupations($key = null)
-    {
-        $occupations = $this->db->columns(['occupation_id', 'occupation_name'])
-                          ->from('occupations')
-                          ->order('occupation_name')
-                          ->select_all(null, PDO::FETCH_KEY_PAIR);
-
-        return ($key != null) ? $occupations[$key] : $occupations;
-    }
+    // public function occupations($key = null)
+    // {
+    //     $occupations = $this->db->columns(['occupation_id', 'occupation_name'])
+    //                       ->from('occupations')
+    //                       ->order('occupation_name')
+    //                       ->select_all(null, PDO::FETCH_KEY_PAIR);
+    //
+    //     return ($key != null) ? $occupations[$key] : $occupations;
+    // }
 
     /**
 	 * Alert Message
@@ -464,5 +503,21 @@ class App
                 return $updated_number . '/' . date('y', strtotime($updated_year));
                 break;
         }
+    }
+
+    /**
+	 * Fetch System Values
+	 * --------------------------------------------
+     *
+	 * @param string $row The row id
+	 */
+    public function system($row)
+    {
+        $db = new Database;
+        $query = $db->columns('value')
+                    ->from('system_settings')
+                    ->where('id = ?')
+                    ->select([$row]);
+        return $query['value'];
     }
 }

@@ -10,7 +10,7 @@ function submitForm(form, add = true, reload = false){
 		formData = $(form).serializeArray(),
 		loader = $(form),
         select2 = $("[data-clear]"),
-		target = $(".status");
+		target = $(form).closest(".panel-body").find('.status');
 
 	// Show loader
 	loader.addClass("loading");
