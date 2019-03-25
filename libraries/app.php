@@ -254,6 +254,30 @@ class App
     }
 
     /**
+     * District Regions
+     * --------------------------------------------
+     *
+     * @return array
+     */
+    public function district_regions()
+    {
+        $regions = [
+            'Ashanti Region' => 'Ashanti Region',
+            'Brong Ahafo Region' => 'Brong Ahafo Region',
+            'Central Region' => 'Central Region',
+            'Eastern Region' => 'Eastern Region',
+            'Greater Accra Region' => 'Greater Accra Region',
+            'Northern Region' => 'Northern Region',
+            'Upper East Region' => 'Upper East Region',
+            'Upper West Region' => 'Upper West Region',
+            'Volta Region' => 'Volta Region',
+            'Western Region' => 'Western Region'
+        ];
+
+        return $regions;
+    }
+
+    /**
      * User Titles
      * --------------------------------------------
      *

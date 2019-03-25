@@ -102,7 +102,7 @@
                             <div class="input-group flex-nowrap">
                                 <select class="form-control select2" name="district" data-ajax--url="<?= site_url("data/districts"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select District" data-minimum-input-length="2" data-width="100%" tabindex="1" data-clear></select>
                                 <div class="input-group-append">
-                                    <button class="btn btn-default" type="button" title="Add New">&#43;</button>
+                                    <button type="button" class="btn btn-default load-modal" title="Add New" data-url="<?= site_url('settings/add-district/'); ?>" data-title="Add New District" data-toggle="modal" data-target="#page-modal" data-backdrop="static">&#43;</button>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                             <div class="input-group flex-nowrap">
                                 <select class="form-control select2" name="locality" data-ajax--url="<?= site_url("data/localities"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Locality" data-minimum-input-length="2" data-width="100%" data-name="locality" tabindex="1" data-clear></select>
                                 <div class="input-group-append">
-                                    <button class="btn btn-default" type="button" title="Add New">&#43;</button>
+                                    <button type="button" class="btn btn-default load-modal" title="Add New" data-url="<?= site_url('settings/add-locality/'); ?>" data-title="Add New Locality" data-toggle="modal" data-target="#page-modal" data-backdrop="static">&#43;</button>
                                 </div>
                             </div>
                         </div>
@@ -134,6 +134,13 @@
                             <label class="label-required">Services</label>
                             <select class="form-control select2-services" data-ajax--url="<?= site_url("data/services"); ?>" data-ajax--data-type="json" data-ajax--delay="250" data-placeholder="Select Service" data-width="100%" tabindex="1" data-clear></select>
                         </div>
+                        <div class="form-group col-md-6">
+                            <label>Total Cost</label>
+                            <h3 class="mb-0">
+                                <span class="opacity-25"><?= $currency; ?></span>
+                                <span id="total-cost">0.00</span>
+                            </h3>
+                        </div>
                     </div>
                     <div class="form-group">
                         <table class="table table-hover table-sm">
@@ -152,10 +159,7 @@
                             </tbody>
                             <tfoot>
                                 <tr class="service-total">
-                                    <td></td>
-                                    <td><b>Total Cost :</b></td>
-                                    <td><b id="total-cost">0.00</b></td>
-                                    <td></td>
+                                    <td colspan="4"></td>
                                 </tr>
                             </tfoot>
                         </table>

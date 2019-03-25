@@ -92,6 +92,7 @@ class Records_Model extends Model
          $this->db
               ->table('attendance')
               ->columns([
+                  'attendance_type',
                   'attendance_date',
                   'patient_id',
                   'created_by',

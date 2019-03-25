@@ -21,6 +21,7 @@ class Records extends Controller
 
         // View data
         $data['title'] = 'Register Patient';
+        $data['currency'] = $this->app->system('app_currency');
 
         // Load view
         $this->load->view('templates/header');
@@ -247,7 +248,7 @@ class Records extends Controller
                 $patient_id = $this->records_model->patient_hosp_info($hospital_number)['patient_id'];
 
                 // Insert new attendance
-                $attendance_id = $this->records_model->insert_attendance($date, $patient_id, $current_user, $datetime, $datetime);
+                $attendance_id = $this->records_model->insert_attendance('Old', $date, $patient_id, $current_user, $datetime, $datetime);
 
                 // Update patient last attendance date
                 $this->records_model->update_last_attendance($date, $datetime, $patient_id);
@@ -283,7 +284,7 @@ class Records extends Controller
                 }
 
                 // Insert new attendance
-                $attendance_id = $this->records_model->insert_attendance($date, $patient_id, $current_user, $datetime, $datetime);
+                $attendance_id = $this->records_model->insert_attendance('New', $date, $patient_id, $current_user, $datetime, $datetime);
 
                 // Insert service bills
                 foreach ($service as $value)
