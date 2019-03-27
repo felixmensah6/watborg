@@ -27,7 +27,7 @@
                             <th>Phone Number</th>
                             <th>Patient Type</th>
                             <th>Total Cost</th>
-                            <th>Amount Paid</th>
+                            <th>Receipt No.</th>
                             <th>Date Added</th>
                             <th data-orderable="false">Action</th>
                         </tr>
@@ -40,7 +40,7 @@
                             <th>Phone Number</th>
                             <th>Patient Type</th>
                             <th>Total Cost</th>
-                            <th>Amount Paid</th>
+                            <th>Receipt No.</th>
                             <th>Date Added</th>
                             <th>Action</th>
                         </tr>

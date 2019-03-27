@@ -131,20 +131,66 @@ class Records_Model extends Model
           $this->db
                ->table('bills')
                ->columns([
-                   'bill_type',
-                   'bill_description',
                    'bill_date',
+                   'bill_debit',
+                   'bill_credit',
+                   'bill_status',
                    'hospital_number',
-                   'patient_id',
                    'patient_name',
                    'patient_phone',
                    'patient_locality',
                    'patient_type',
                    'attendance_id',
-                   'reference_type',
-                   'reference_number',
-                   'debit',
-                   'credit',
+                   'receipt_number',
+                   'created_at',
+                   'updated_at'
+               ], true)
+               ->insert($values);
+
+           return $this->db->last_Insert_Id();
+      }
+
+      /**
+       * Update Bill
+       * --------------------------------------------
+       *
+       * @param int $debit The total debit
+       * @param int $receipt The receipt number
+       * @param int $id The patient id
+       * @return void
+       */
+      public function update_bill($debit, $receipt, $id)
+      {
+          $this->db
+               ->table('bills')
+               ->set([
+                   'bill_debit' => '?',
+                   'receipt_number' => '?'
+               ])
+               ->where('bill_id = ?')
+               ->update([$debit, $receipt, $id]);
+      }
+
+     /**
+  	  * Create Bill Items
+  	  * --------------------------------------------
+       *
+       * @return void
+  	  */
+      public function insert_bill_items()
+      {
+          $values = func_get_args();
+          $this->db
+               ->table('bill_items')
+               ->columns([
+                   'bill_item_date',
+                   'bill_item_category',
+                   'bill_item_type',
+                   'bill_item_description',
+                   'bill_item_debit',
+                   'bill_item_credit',
+                   'attendance_id',
+                   'bill_id',
                    'created_by',
                    'created_at',
                    'updated_at'
@@ -152,30 +198,36 @@ class Records_Model extends Model
                ->insert($values);
       }
 
-     /**
-  	  * Create Bill Summaries
-  	  * --------------------------------------------
+      /**
+       * Fetch Bill Data
+       * --------------------------------------------
        *
-       * @return void
-  	  */
-      public function insert_bill_summaries()
+       * @param int $bill_id The bill id
+       * @return array
+       */
+      public function bill_info($bill_id)
       {
-          $values = func_get_args();
-          $this->db
-               ->table('bill_summaries')
-               ->columns([
-                   'bill_summary_date',
-                   'hospital_number',
-                   'patient_id',
-                   'patient_name',
-                   'patient_phone',
-                   'patient_locality',
-                   'patient_type',
-                   'attendance_id',
-                   'reference_number',
-                   'debit',
-                   'credit'
-               ], true)
-               ->insert($values);
+          return $this->db
+                      ->columns('*')
+                      ->from('bills')
+                      ->where('bill_id = ?')
+                      ->select([$bill_id]);
+      }
+
+      /**
+       * Fetch Bill Item Data
+       * --------------------------------------------
+       *
+       * @param string $type Whether is a Bill or Payment
+       * @param int $bill_id The bill id
+       * @return array
+       */
+      public function bill_items_info($type, $bill_id)
+      {
+          return $this->db
+                      ->columns('*')
+                      ->from('bill_items')
+                      ->where('bill_item_type = ? AND bill_id = ?')
+                      ->select_all([$type, $bill_id]);
       }
 }

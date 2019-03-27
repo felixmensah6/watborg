@@ -29,7 +29,8 @@ class Error_Handler
 		$header_title = 'A PHP Error was encountered!';
 		$time = date('Y-m-d h:i:s a',time());
 		$path_length = strlen(__DIR__) - 11;
-		$filename = addslashes(ucfirst(substr($filename, $path_length)));
+		$filename = ucfirst(substr($filename, $path_length));
+		$filename = str_replace('\\', '/', $filename);
 		$view_path = '';
 
 		$security = [

@@ -188,7 +188,7 @@ class App
                 if(in_array($role, explode(',', $submenu['submenu_roles'])))
                 {
                     // Display menu
-                    if($submenu['submenu_visible'] != null && $submenu['submenu_visible'] == $current)
+                    if(($submenu['submenu_visible'] != null && $submenu['submenu_visible'] == $current) || $submenu['submenu_parameter'] == 1)
                     {
                         $build .= '<a href="' . site_url($submenu['submenu_url'] . $param) . '" class="ns-item' . $active . '">' . $submenu['submenu_name'] . '</a>';
                     }
@@ -560,5 +560,17 @@ class App
                     ->where('id = ?')
                     ->select([$row]);
         return $query['value'];
+    }
+
+    /**
+	 * Receipt Number
+	 * --------------------------------------------
+     *
+	 * @param int $number The number to convert
+	 * @param int $length The min length of the output number
+	 */
+    public function receipt_number($number, $length = 6)
+    {
+        return str_pad($number, $length, 0, STR_PAD_LEFT);
     }
 }

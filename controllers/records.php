@@ -253,21 +253,24 @@ class Records extends Controller
                 // Update patient last attendance date
                 $this->records_model->update_last_attendance($date, $datetime, $patient_id);
 
+                // Insert bills
+                $bill_id = $this->records_model->insert_bills($date, '0', '0', '0', $auto_hosp_number, $patient_name, $phone, $locality, 'Patient', $attendance_id, '0', $datetime, $datetime);
+
                 // Insert service bills
                 foreach ($service as $value)
                 {
                     // Fetch service details
                     $row = $this->settings_model->service_info($value);
 
-                    // Insert bills
-                    $this->records_model->insert_bills('Service', $row['service_name'], $date, $auto_hosp_number, $patient_id, $patient_name, $phone, $locality, 'Patient', $attendance_id, 'Bill', $reference, $row['service_cost'], '0', $current_user, $datetime, $datetime);
+                    // Insert bill items
+                    $this->records_model->insert_bill_items($date, 'Service', 'Bill', $row['service_name'], $row['service_cost'], '0', $attendance_id, $bill_id, $current_user, $datetime, $datetime);
 
                     // Add the service cost
                     $total_cost += $row['service_cost'];
                 }
 
-                // Insert bill summaries
-                $this->records_model->insert_bill_summaries($date, $auto_hosp_number, $patient_id, $patient_name, $phone, $locality, 'Patient', $attendance_id, $reference, $total_cost, '0');
+                // Update the the bill with total cost and receipt number
+                $this->records_model->update_bill($total_cost, $this->app->receipt_number($bill_id), $bill_id);
 
                 // Show alert message
                 echo '<h6 class="text-success mb-3">Registration was successful!</h6>';
@@ -286,21 +289,24 @@ class Records extends Controller
                 // Insert new attendance
                 $attendance_id = $this->records_model->insert_attendance('New', $date, $patient_id, $current_user, $datetime, $datetime);
 
+                // Insert bills
+                $bill_id = $this->records_model->insert_bills($date, '0', '0', '0', $auto_hosp_number, $patient_name, $phone, $locality, 'Patient', $attendance_id, '0', $datetime, $datetime);
+
                 // Insert service bills
                 foreach ($service as $value)
                 {
                     // Fetch service details
                     $row = $this->settings_model->service_info($value);
 
-                    // Insert bills
-                    $this->records_model->insert_bills('Service', $row['service_name'], $date, $auto_hosp_number, $patient_id, $patient_name, $phone, $locality, 'Patient', $attendance_id, 'Bill', $reference, $row['service_cost'], '0', $current_user, $datetime, $datetime);
+                    // Insert bill items
+                    $this->records_model->insert_bill_items($date, 'Service', 'Bill', $row['service_name'], $row['service_cost'], '0', $attendance_id, $bill_id, $current_user, $datetime, $datetime);
 
                     // Add the service cost
                     $total_cost += $row['service_cost'];
                 }
 
-                // Insert bill summaries
-                $this->records_model->insert_bill_summaries($date, $auto_hosp_number, $patient_id, $patient_name, $phone, $locality, 'Patient', $attendance_id, $reference, $total_cost, '0');
+                // Update the the bill with total cost and receipt number
+                $this->records_model->update_bill($total_cost, $this->app->receipt_number($bill_id), $bill_id);
 
                 // Show alert message
                 echo '<h6 class="text-success mb-3">Registration was successful!</h6>' .
@@ -365,7 +371,7 @@ class Records extends Controller
             },
             null => function($value)
             {
-                $actions = '<a href="' . site_url('records/patient-profile/') . $this->security->encrypt_id($value['patient_id']) . '" class="btn btn-default btn-xs">Details</a> ';
+                $actions = '<a href="' . site_url('records/patient-profile/') . $this->security->encrypt_id($value['patient_id']) . '" class="btn btn-default btn-xs">More</a> ';
 
                 $actions .= '<a href="' . site_url('records/edit-patient/') . $this->security->encrypt_id($value['patient_id']) . '" class="btn btn-default btn-xs">Edit</a> ';
 

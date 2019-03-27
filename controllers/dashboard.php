@@ -21,7 +21,7 @@ class Dashboard extends Controller
 
         // Load view
         $this->load->view('templates/header');
-        $this->load->view('pages/dashboard', $data);
+        $this->load->view('pages/dashboard/dashboard', $data);
         $this->load->view('templates/footer');
     }
 }

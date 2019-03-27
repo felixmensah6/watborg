@@ -12,7 +12,7 @@ class Cashier extends Controller
 	 * Index
 	 * --------------------------------------------
      *
-     * @return string
+     * @return void
 	 */
     public function index()
     {
@@ -32,20 +32,32 @@ class Cashier extends Controller
 	 * Billing
 	 * --------------------------------------------
      *
-     * @return string
+     * @param int $bill_id The bill id
+     * @return void
 	 */
-    public function billing()
+    public function billing($bill_id = '')
     {
         // Check for an active session else redirect
         $this->app->check_active_session(2);
 
+        // Load model
+        $this->load->model('records-model');
+
+        // Decrypted bill id
+        $id = $this->security->decrypt_id($bill_id);
+
         // View data
-        $data['title'] = 'Patient Billing';
+        $data['title'] = ($bill_id != '') ? 'Bill Payment' : 'Guest Billing';
         $data['currency'] = $this->app->system('app_currency');
+        $data['row'] = $this->records_model->bill_info($id);
+        $data['bill_items'] = $this->records_model->bill_items_info('Bill', $id);
+
+        // Select view depending on patient type
+        $view = ($bill_id != '') ? 'bill-payment' : 'guest-billing';
 
         // Load view
         $this->load->view('templates/header');
-        $this->load->view('pages/cashier/billing', $data);
+        $this->load->view('pages/cashier/' . $view, $data);
         $this->load->view('templates/footer');
     }
 
@@ -53,7 +65,7 @@ class Cashier extends Controller
 	 * Daily Transactions
 	 * --------------------------------------------
      *
-     * @return string
+     * @return void
 	 */
     public function daily_transactions()
     {
@@ -84,7 +96,7 @@ class Cashier extends Controller
         $this->load->library('datatables');
 
         $columns = [
-            'bill_summary_id' => function($value, $row, $num)
+            'bill_id' => function($value, $row, $num)
             {
                 return $num++;
             },
@@ -95,32 +107,28 @@ class Cashier extends Controller
             },
             'patient_phone' => null,
             'patient_type' => null,
-            'debit' => function($value)
+            'bill_debit' => function($value)
             {
                 return number_format($value, 2);
             },
-            'credit' => function($value)
-            {
-                return number_format($value, 2);
-            },
-            'bill_summary_date' => function($value)
+            'receipt_number' => null,
+            'bill_date' => function($value)
             {
                 return time_format($value, 'DD MMM. YYYY');
             },
             null => function($value)
             {
-                $actions = '<a href="' . site_url('records/patient-profile/') . $this->security->encrypt_id($value['bill_summary_id']) . '" class="btn btn-default btn-xs">Pay Bill</a> ';
+                $actions = '<a href="' . site_url('cashier/billing/') . $this->security->encrypt_id($value['bill_id']) . '" class="btn btn-default btn-xs">Pay Bill</a> ';
 
                 return $actions;
             }
         ];
 
-
         $this->datatables->render_advance(
             $columns,
             'SELECT {TOTAL_ROWS} *
-            FROM bill_summaries
-            WHERE {SEARCH_COLUMN} AND paid_status = 0
+            FROM bills
+            WHERE {SEARCH_COLUMN} AND bill_status = 0
             ORDER BY {ORDER_COLUMN} {ORDER_DIR} {LIMIT_ROWS}'
         );
     }
